@@ -14,7 +14,7 @@ struct PushColli
     uint16_t sky_base_height;
 };
 
-class GGFramework
+GGFRAMEWORK_API class GGFramework
 {
 private:
     GGFramework() = default;
@@ -76,7 +76,7 @@ public:
 
     static auto get_instance() -> GGFramework*;
     auto initialize() -> void;
-
+    
     static auto register_act_tb(void* act_tb) -> void;
     static auto register_obj_id(void* obj_id) -> void;
     static auto register_chara_id(const std::string& id) -> void;

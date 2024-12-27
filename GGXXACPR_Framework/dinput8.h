@@ -14,7 +14,7 @@ extern HMODULE DInput8DLL;
 
 extern "C"
 {
-    DINPUT8_API HRESULT WINAPI DirectInput8Create(
+    GGFRAMEWORK_API HRESULT WINAPI DirectInput8Create(
         HINSTANCE hinst,
         DWORD dwVersion,
         REFIID riidltf,
