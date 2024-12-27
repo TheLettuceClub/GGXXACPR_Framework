@@ -17,7 +17,10 @@ struct PushColli
 GGFRAMEWORK_API class GGFramework
 {
 private:
-    GGFramework() = default;
+    GGFramework()
+    {
+        initialize();
+    }
 
     static GGFramework* instance_;
     static std::mutex mtx_;
@@ -70,12 +73,12 @@ private:
     static std::vector<uint32_t> normal_attack_disables_;
     static std::vector<uint16_t> near_slash_dists_;
     static int* game_version_;
+    auto initialize() -> void;
 
 public:
     GGFramework(const GGFramework&) = delete;
 
     static auto get_instance() -> GGFramework*;
-    auto initialize() -> void;
     
     static auto register_act_tb(void* act_tb) -> void;
     static auto register_obj_id(void* obj_id) -> void;

@@ -17,7 +17,6 @@ auto init() -> void
     }
 
     GGFramework* framework = GGFramework::get_instance();
-    framework->initialize();
 }
 
 BOOL APIENTRY DllMain([[maybe_unused]] HMODULE Module,
