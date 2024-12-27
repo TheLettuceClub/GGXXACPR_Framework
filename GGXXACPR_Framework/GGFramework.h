@@ -14,7 +14,7 @@ struct PushColli
     uint16_t sky_base_height;
 };
 
-GGFRAMEWORK_API class GGFramework
+class GGFRAMEWORK_API GGFramework
 {
 private:
     GGFramework()
