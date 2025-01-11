@@ -1,0 +1,23 @@
+Connect via WS/SAMMI/etc
+"ggxx_stateUpdate"
+data.eventInfo.*
+	framecount
+	p1/2
+		CharID
+		direction
+		health
+		damage
+		negativeVal
+		commandFlag (do not use)
+		stun1
+		stun2
+		tensionBalance
+		CleanHitCount
+		hitCount (broken?)
+		RISC
+		hitLevel
+
+"ggxx_roundEndEvent"
+data.eventInfo.*
+	frameCount
+	whoWon (broken)
