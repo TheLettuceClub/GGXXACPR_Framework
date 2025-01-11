@@ -57,10 +57,10 @@ struct PLAYER_ENTRY
 	int32_t homingtime;
 	int32_t inertia;
 	int32_t offx;
-	uint16_t notThrowTime;
-	int16_t GuardPoint;
-	int16_t GuardTimer;
-	uint16_t DownTimer;
+	uint16_t notThrowTime; //throw invuln time
+	int16_t GuardPoint; //RISC bar value
+	int16_t GuardTimer; //likely used for IB/SB lockout timers
+	uint16_t DownTimer; //amount of frames on ground
 	uint8_t HomingJumpDir;
 	uint8_t pad_hd;
 	uint8_t reqhit;
@@ -68,8 +68,8 @@ struct PLAYER_ENTRY
 	float hitDispIn;
 	uint8_t inertiaflag;
 	uint8_t whiteouttime;
-	char MutekiTime;
-	uint8_t maintain;
+	char MutekiTime; //invuln time after air tech
+	uint8_t maintain; //unknown, always 0
 	uint8_t SkyDashCorrect;
 	uint8_t inertiatime;
 	uint8_t DownBoundDamage;
@@ -91,8 +91,8 @@ struct PLAYER_ENTRY
 	char JGWhiteTime;
 	void* GetChainDataTableProc;
 	void* Enemy;
-	uint16_t PunchKey;
-	uint16_t KickKey;
+	uint16_t PunchKey; //these are set to their internal, constant values only when a player has bound that button, zero otherwise
+	uint16_t KickKey; // they don't change at all during gameplay, so they're really not useful to me
 	uint16_t SlashKey;
 	uint16_t HeavySlashKey;
 	uint16_t DustKey;
@@ -121,13 +121,13 @@ struct PLAYER_ENTRY
 	void* ExCommandFunc;
 	uint8_t JumpDir;
 	uint8_t CPU;
-	char sousaitime;
+	char sousaitime; //unknown, always 0
 	uint8_t FaintMax;
 	union PERSONALWORK PersonalWork[0x4];
 	uint64_t padd;
 	uint64_t paddd;
 	uint32_t padddd;
-	int32_t DownFlag;
+	int32_t DownFlag; //either 0 or 16384
 	void* Child;
 	void* AtkHitInterrupt;
 	void* AtkGuardInterrupt;
@@ -150,14 +150,14 @@ struct PLAYER_ENTRY
 	int32_t lastposx;
 	int16_t TensionBarLength;
 	uint8_t TShand;
-	uint8_t EnemyTouch;
+	uint8_t EnemyTouch; //amount of time both players are physically touching on screen
 	uint8_t AttackDown;
 	uint8_t DefenceDown;
 	uint8_t JumpSeal;
 	uint8_t ArtsSeal;
 	uint8_t Poison;
 	uint8_t MistTime;
-	int16_t DamageTime;
+	int16_t DamageTime; //amount of frames after tech window??
 	uint8_t field112_0xf8;
 	uint8_t field113_0xf9;
 	uint8_t field114_0xfa;
@@ -167,7 +167,7 @@ struct PLAYER_ENTRY
 	uint16_t HitCount;
 	uint16_t DispHitCount;
 	uint8_t DashSeal;
-	uint8_t AllCounter;
+	uint8_t AllCounter; //unknown, always 0
 	uint8_t FirstHitGuardOff;
 	uint8_t PunchSeal;
 	uint8_t KickSeal;
@@ -254,6 +254,59 @@ union ACTWORK
 	void* p;
 };
 
+struct HITSEPARAM
+{
+	unsigned char no[0x2];
+	unsigned char flag[0x2];
+};
+
+union HITSEUNION
+{
+	unsigned int l;
+	struct HITSEPARAM param;
+};
+
+struct DAMAGEPARAM
+{
+	unsigned short DownX;
+	unsigned short DownY;
+	unsigned short DownGrav;
+	unsigned short DownUkemiTime;
+	unsigned short FaintPoint;
+	unsigned short field5_0xa;
+	unsigned int DownFlag;
+	unsigned short Kezuri;
+	unsigned short DamageHosei;
+	union HITSEUNION HitSE;
+	union HITSEUNION GuardSE;
+	unsigned char dno;
+	unsigned char dprob;
+	unsigned char gno;
+	unsigned char gprob;
+	unsigned short field15_0x20; //these two could be the void* DamInt
+	unsigned short field16_0x22;
+	char field17_0x24;
+	char field18_0x25;
+	char field19_0x26;
+	char field20_0x27;
+	char field21_0x28;
+	char field22_0x29;
+	char field23_0x2a;
+	char field24_0x2b;
+};
+
+struct TACTNORMAL
+{
+	unsigned char id;
+	unsigned char arg1;
+	unsigned short arg2;
+	unsigned short arg3;
+	unsigned short arg4;
+	unsigned char arg5;
+	unsigned char arg6;
+	unsigned char arg7;
+};
+
 struct CHARACTER_WORK
 {
 	enum CharacterID idno;
@@ -265,7 +318,7 @@ struct CHARACTER_WORK
 	uint32_t actnonext;
 	uint32_t actnonexttemp;
 	int16_t actno;
-	uint16_t Localid;
+	uint16_t Localid; //unknown
 	uint16_t ActTimer;
 	uint16_t HitPoint;
 	struct CHARACTER_WORK* parentWork;
@@ -290,9 +343,9 @@ struct CHARACTER_WORK
 	uint16_t scaleY;
 	struct COLLISION* ColliAddr;
 	struct COLLISION* ExColliAddr;
-	char ColliFlag;
-	char HitColliFlag;
-	char DamColliFlag;
+	char ColliFlag; //somtimes changes, unclear when or why
+	char HitColliFlag; //unknown, always 0
+	char DamColliFlag; //unknown, always 0
 	uint8_t field37_0x5f;
 	uint16_t TensionAddbyHit;
 	void* HitColliAddr;
@@ -303,7 +356,7 @@ struct CHARACTER_WORK
 	int16_t Imageh;
 	char ColliCnt;
 	char ColliNo;
-	int16_t priority2;
+	int16_t priority2; //does change when things happen, unclear why
 	uint8_t field48_0x82;
 	uint8_t field49_0x83;
 	uint8_t field50_0x84;
@@ -341,7 +394,7 @@ struct CHARACTER_WORK
 	uint16_t parentx;
 	uint16_t parenty;
 	uint16_t angle;
-	uint16_t priority;
+	uint16_t priority; //does change, unclear why
 	uint32_t* InstTb;
 	struct TACTHEADER ActHeader;
 	struct TACTHEADER* ActHeaderp;

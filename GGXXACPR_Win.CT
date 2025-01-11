@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"ply"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1765C130+2C</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"ply"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1765C130+2C</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"ply"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1765C130+2C</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Structures StructVersion="2">
+    <Structure Name="CHARACTER_WORK" AutoFill="0" AutoCreate="0" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="1" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000000" Description="idno" DisplayMethod="unsigned integer"/>
+        <Element Offset="2" Vartype="Byte" Bytesize="1" OffsetHex="00000002" Description="dirflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="3" Vartype="Byte" Bytesize="1" OffsetHex="00000003" Description="posdirflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="4" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000004" Description="back" DisplayMethod="unsigned integer"/>
+        <Element Offset="8" Vartype="Pointer" Bytesize="4" OffsetHex="00000008" ChildStruct="CHARACTER_WORK" Description="next" DisplayMethod="unsigned integer"/>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000000C" Description="actst" DisplayMethod="unsigned integer"/>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="actnonext" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000014" Description="actnonexttemp" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000018" Description="actno" DisplayMethod="signed integer"/>
+        <Element Offset="26" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000001A" Description="localid" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000001C" Description="acttimer" DisplayMethod="unsigned integer"/>
+        <Element Offset="30" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000001E" Description="hitpoint" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="4" OffsetHex="00000020" ChildStruct="CHARACTER_WORK" Description="parentwork" DisplayMethod="unsigned integer"/>
+        <Element Offset="36" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000024" Description="actnosv" DisplayMethod="signed integer"/>
+        <Element Offset="38" Vartype="Byte" Bytesize="1" OffsetHex="00000026" Description="_pad" DisplayMethod="unsigned integer"/>
+        <Element Offset="39" Vartype="Byte" Bytesize="1" OffsetHex="00000027" Description="padid" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000028" Description="parentFlag" DisplayMethod="signed integer"/>
+        <Element Offset="42" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000002A" Description="guardst" DisplayMethod="signed integer"/>
+        <Element Offset="44" Vartype="Pointer" Bytesize="4" OffsetHex="0000002C" ChildStruct="PLAYER_ENTRY" Description="ply" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="Pointer" Bytesize="4" OffsetHex="00000030" Description="graphicfunc" DisplayMethod="unsigned integer"/>
+        <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="attackst" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="commandflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="60" Vartype="Pointer" Bytesize="4" OffsetHex="0000003C" Description="celltop" DisplayMethod="unsigned integer"/>
+        <Element Offset="64" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000040" Description="cellno" DisplayMethod="unsigned integer"/>
+        <Element Offset="66" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000042" Description="lastcellno" DisplayMethod="signed integer"/>
+        <Element Offset="68" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000044" Description="imageno" DisplayMethod="signed integer"/>
+        <Element Offset="70" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000046" Description="lastimageno" DisplayMethod="signed integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="4" OffsetHex="00000048" Description="gcltop" DisplayMethod="unsigned integer"/>
+        <Element Offset="76" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000004C" Description="corex" DisplayMethod="unsigned integer"/>
+        <Element Offset="78" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000004E" Description="corey" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000050" Description="scale" DisplayMethod="unsigned integer"/>
+        <Element Offset="82" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000052" Description="scaley" DisplayMethod="unsigned integer"/>
+        <Element Offset="84" Vartype="Pointer" Bytesize="4" OffsetHex="00000054" ChildStruct="COLLISION" Description="collidaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="4" OffsetHex="00000058" ChildStruct="COLLISION" Description="excollidaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="92" Vartype="Byte" Bytesize="1" OffsetHex="0000005C" Description="colliflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="93" Vartype="Byte" Bytesize="1" OffsetHex="0000005D" Description="hitcolliflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="94" Vartype="Byte" Bytesize="1" OffsetHex="0000005E" Description="damcolliflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="95" Vartype="Byte" Bytesize="1" OffsetHex="0000005F" Description="field37" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000060" Description="tensionaddbyhit" DisplayMethod="unsigned integer"/>
+        <Element Offset="98" Vartype="Pointer" Bytesize="4" OffsetHex="00000062" Description="hitcolliaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="102" Vartype="Pointer" Bytesize="4" OffsetHex="00000066" Description="damcolliaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="106" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006A" Description="collipos:x" DisplayMethod="unsigned integer"/>
+        <Element Offset="110" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006E" Description="collipos:y" DisplayMethod="unsigned integer"/>
+        <Element Offset="114" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000072" Description="tactheader:flag" DisplayMethod="unsigned integer"/>
+        <Element Offset="118" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000076" Description="tactheader:lvflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="Byte" Bytesize="1" OffsetHex="00000078" Description="tactheader:damage" DisplayMethod="unsigned integer"/>
+        <Element Offset="121" Vartype="Byte" Bytesize="1" OffsetHex="00000079" Description="tactheader:flag2" DisplayMethod="unsigned integer"/>
+        <Element Offset="122" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000007A" Description="imagew" DisplayMethod="signed integer"/>
+        <Element Offset="124" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000007C" Description="imageh" DisplayMethod="signed integer"/>
+        <Element Offset="126" Vartype="Byte" Bytesize="1" OffsetHex="0000007E" Description="collicnt" DisplayMethod="unsigned integer"/>
+        <Element Offset="127" Vartype="Byte" Bytesize="1" OffsetHex="0000007F" Description="collno" DisplayMethod="unsigned integer"/>
+        <Element Offset="128" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000080" Description="priority2" DisplayMethod="signed integer"/>
+        <Element Offset="130" Vartype="Byte" Bytesize="1" OffsetHex="00000082" Description="field48" DisplayMethod="signed integer"/>
+        <Element Offset="131" Vartype="Byte" Bytesize="1" OffsetHex="00000083" Description="field49" DisplayMethod="signed integer"/>
+        <Element Offset="132" Vartype="Byte" Bytesize="1" OffsetHex="00000084" Description="field50" DisplayMethod="signed integer"/>
+        <Element Offset="133" Vartype="Byte" Bytesize="1" OffsetHex="00000085" Description="field51" DisplayMethod="signed integer"/>
+        <Element Offset="134" Vartype="Byte" Bytesize="1" OffsetHex="00000086" Description="field52" DisplayMethod="signed integer"/>
+        <Element Offset="135" Vartype="Byte" Bytesize="1" OffsetHex="00000087" Description="field87" DisplayMethod="signed integer"/>
+        <Element Offset="136" Vartype="Pointer" Bytesize="4" OffsetHex="00000088" ChildStruct="DAMAGEPARAM" Description="hitparam" DisplayMethod="unsigned integer"/>
+        <Element Offset="140" Vartype="Pointer" Bytesize="4" OffsetHex="0000008C" ChildStruct="DAMAGEPARAM" Description="damparam" DisplayMethod="unsigned integer"/>
+        <Element Offset="144" Vartype="Pointer" Bytesize="4" OffsetHex="00000090" Description="collihitinterrupt" DisplayMethod="unsigned integer"/>
+        <Element Offset="148" Vartype="Pointer" Bytesize="4" OffsetHex="00000094" Description="paletteproc" DisplayMethod="unsigned integer"/>
+        <Element Offset="152" Vartype="Byte" Bytesize="1" OffsetHex="00000098" Description="palid" DisplayMethod="unsigned integer"/>
+        <Element Offset="153" Vartype="Byte" Bytesize="1" OffsetHex="00000099" Description="localpalette" DisplayMethod="unsigned integer"/>
+        <Element Offset="154" Vartype="Byte" Bytesize="1" OffsetHex="0000009A" Description="paletteflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="155" Vartype="Byte" Bytesize="1" OffsetHex="0000009B" Description="fadeval" DisplayMethod="unsigned integer"/>
+        <Element Offset="156" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000009C" Description="spriteidtop" DisplayMethod="signed integer"/>
+        <Element Offset="158" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000009E" Description="fbspriteidtop" DisplayMethod="signed integer"/>
+        <Element Offset="160" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000A0" Description="spriteidmax" DisplayMethod="signed integer"/>
+        <Element Offset="162" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000A2" Description="spriteid" DisplayMethod="signed integer"/>
+        <Element Offset="164" Vartype="Pointer" Bytesize="4" OffsetHex="000000A4" Description="sphaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="168" Vartype="Byte" Bytesize="1" OffsetHex="000000A8" Description="transmode" DisplayMethod="unsigned integer"/>
+        <Element Offset="169" Vartype="Byte" Bytesize="1" OffsetHex="000000A9" Description="transmode2" DisplayMethod="unsigned integer"/>
+        <Element Offset="170" Vartype="Byte" Bytesize="1" OffsetHex="000000AA" Description="spriteidx" DisplayMethod="unsigned integer"/>
+        <Element Offset="171" Vartype="Byte" Bytesize="1" OffsetHex="000000AB" Description="texsizemax" DisplayMethod="unsigned integer"/>
+        <Element Offset="172" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000AC" Description="spriteflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="176" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000B0" Description="posx" DisplayMethod="signed integer"/>
+        <Element Offset="180" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000B4" Description="posy" DisplayMethod="signed integer"/>
+        <Element Offset="184" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000B8" Description="xspeed" DisplayMethod="signed integer"/>
+        <Element Offset="188" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000BC" Description="yspeed" DisplayMethod="signed integer"/>
+        <Element Offset="192" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000C0" Description="speedsvx" DisplayMethod="signed integer"/>
+        <Element Offset="196" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000C4" Description="speedsvy" DisplayMethod="signed integer"/>
+        <Element Offset="200" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000C8" Description="hitbackx" DisplayMethod="signed integer"/>
+        <Element Offset="204" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000CC" Description="rhitbackx" DisplayMethod="signed integer"/>
+        <Element Offset="208" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000D0" Description="adbackx" DisplayMethod="signed integer"/>
+        <Element Offset="212" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000D4" Description="gravity" DisplayMethod="signed integer"/>
+        <Element Offset="216" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000D8" Description="parentx" DisplayMethod="unsigned integer"/>
+        <Element Offset="218" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000DA" Description="parenty" DisplayMethod="unsigned integer"/>
+        <Element Offset="220" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000DC" Description="angle" DisplayMethod="unsigned integer"/>
+        <Element Offset="222" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000DE" Description="priority" DisplayMethod="unsigned integer"/>
+        <Element Offset="224" Vartype="Pointer" Bytesize="4" OffsetHex="000000E0" Description="insttb" DisplayMethod="unsigned integer"/>
+        <Element Offset="228" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000E4" Description="actheader:flag" DisplayMethod="unsigned integer"/>
+        <Element Offset="232" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000E8" Description="actheader:lvflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="234" Vartype="Byte" Bytesize="1" OffsetHex="000000EA" Description="actheader:damage" DisplayMethod="unsigned integer"/>
+        <Element Offset="235" Vartype="Byte" Bytesize="1" OffsetHex="000000EB" Description="actheader:flag2" DisplayMethod="unsigned integer"/>
+        <Element Offset="236" Vartype="Pointer" Bytesize="4" OffsetHex="000000EC" ChildStruct="TACTHEADER" Description="actheaderp" DisplayMethod="unsigned integer"/>
+        <Element Offset="240" Vartype="Pointer" Bytesize="4" OffsetHex="000000F0" Description="instaddr" DisplayMethod="unsigned integer"/>
+        <Element Offset="244" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000F4" Description="instst" DisplayMethod="signed integer"/>
+        <Element Offset="246" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000F6" Description="instval" DisplayMethod="signed integer"/>
+        <Element Offset="248" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000F8" Description="animeno" DisplayMethod="signed integer"/>
+        <Element Offset="250" Vartype="2 Bytes" Bytesize="2" OffsetHex="000000FA" Description="animetime" DisplayMethod="unsigned integer"/>
+        <Element Offset="252" Vartype="Byte" Bytesize="1" OffsetHex="000000FC" Description="animerate" DisplayMethod="unsigned integer"/>
+        <Element Offset="253" Vartype="Byte" Bytesize="1" OffsetHex="000000FD" Description="hitstoptime" DisplayMethod="unsigned integer"/>
+        <Element Offset="254" Vartype="Byte" Bytesize="1" OffsetHex="000000FE" Description="animetimemax" DisplayMethod="unsigned integer"/>
+        <Element Offset="255" Vartype="Byte" Bytesize="1" OffsetHex="000000FF" Description="mark" DisplayMethod="unsigned integer"/>
+        <Element Offset="256" Vartype="Byte" Bytesize="1" OffsetHex="00000100" Description="acthitcount" DisplayMethod="unsigned integer"/>
+        <Element Offset="257" Vartype="Byte" Bytesize="1" OffsetHex="00000101" Description="maxhitcount" DisplayMethod="unsigned integer"/>
+        <Element Offset="258" Vartype="Byte" Bytesize="1" OffsetHex="00000102" Description="trans" DisplayMethod="unsigned integer"/>
+        <Element Offset="259" Vartype="Byte" Bytesize="1" OffsetHex="00000103" Description="trans2" DisplayMethod="unsigned integer"/>
+        <Element Offset="260" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000104" Description="landbreakactno" DisplayMethod="unsigned integer"/>
+        <Element Offset="264" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000108" Description="actwork" DisplayMethod="unsigned integer"/>
+        <Element Offset="268" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000010C" Description="transspeed" DisplayMethod="unsigned integer"/>
+        <Element Offset="270" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000010E" Description="anglespeed" DisplayMethod="unsigned integer"/>
+        <Element Offset="272" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000110" Description="scalespeed" DisplayMethod="unsigned integer"/>
+        <Element Offset="276" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000114" Description="scaleyspeed" DisplayMethod="unsigned integer"/>
+        <Element Offset="280" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000118" Description="field108" DisplayMethod="unsigned integer"/>
+        <Element Offset="284" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000011C" Description="field109" DisplayMethod="unsigned integer"/>
+        <Element Offset="288" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000120" Description="boostarts_flag" DisplayMethod="unsigned integer"/>
+        <Element Offset="292" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000124" Description="boostarts_inheritanceactno" DisplayMethod="signed integer"/>
+        <Element Offset="296" Vartype="Byte" Bytesize="1" OffsetHex="00000128" Description="var" DisplayMethod="unsigned integer"/>
+        <Element Offset="297" Vartype="Byte" Bytesize="1" OffsetHex="00000129" Description="field113" DisplayMethod="unsigned integer"/>
+        <Element Offset="298" Vartype="Byte" Bytesize="1" OffsetHex="0000012A" Description="field114" DisplayMethod="unsigned integer"/>
+        <Element Offset="299" Vartype="Byte" Bytesize="1" OffsetHex="0000012B" Description="field115" DisplayMethod="unsigned integer"/>
+        <Element Offset="300" Vartype="Byte" Bytesize="1" OffsetHex="0000012C" Description="field116" DisplayMethod="unsigned integer"/>
+        <Element Offset="301" Vartype="Byte" Bytesize="1" OffsetHex="0000012D" Description="field117" DisplayMethod="unsigned integer"/>
+        <Element Offset="302" Vartype="Byte" Bytesize="1" OffsetHex="0000012E" Description="field118" DisplayMethod="unsigned integer"/>
+        <Element Offset="303" Vartype="Byte" Bytesize="1" OffsetHex="0000012F" Description="field119" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="COLLIPOS" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000000" Description="x" DisplayMethod="signed integer"/>
+        <Element Offset="4" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000004" Description="y" DisplayMethod="signed integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="TACTHEADER" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000000" Description="flag" DisplayMethod="unsigned integer"/>
+        <Element Offset="4" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000004" Description="lvflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="6" Vartype="Byte" Bytesize="1" OffsetHex="00000006" Description="damage" DisplayMethod="unsigned integer"/>
+        <Element Offset="7" Vartype="Byte" Bytesize="1" OffsetHex="00000007" Description="flag2" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="PLAYER_ENTRY" AutoFill="0" AutoCreate="0" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000000" Description="tension" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="DAMAGEPARAM" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000000" Description="downx" DisplayMethod="unsigned integer"/>
+        <Element Offset="2" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000002" Description="downy" DisplayMethod="unsigned integer"/>
+        <Element Offset="4" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000004" Description="downgrav" DisplayMethod="unsigned integer"/>
+        <Element Offset="6" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000006" Description="downukemi" DisplayMethod="unsigned integer"/>
+        <Element Offset="8" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000008" Description="faintpoint" DisplayMethod="unsigned integer"/>
+        <Element Offset="10" Vartype="2 Bytes" Bytesize="2" OffsetHex="0000000A" Description="field5" DisplayMethod="unsigned integer"/>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000000C" Description="downflag" DisplayMethod="unsigned integer"/>
+        <Element Offset="16" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000010" Description="kezuri" DisplayMethod="unsigned integer"/>
+        <Element Offset="18" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000012" Description="damagehosei" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000014" Description="hitse" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="guardse" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="Byte" Bytesize="1" OffsetHex="0000001C" Description="dno" DisplayMethod="unsigned integer"/>
+        <Element Offset="29" Vartype="Byte" Bytesize="1" OffsetHex="0000001D" Description="dprob" DisplayMethod="unsigned integer"/>
+        <Element Offset="30" Vartype="Byte" Bytesize="1" OffsetHex="0000001E" Description="gno" DisplayMethod="unsigned integer"/>
+        <Element Offset="31" Vartype="Byte" Bytesize="1" OffsetHex="0000001F" Description="gprob" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000020" Description="field15" DisplayMethod="unsigned integer"/>
+        <Element Offset="34" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000022" Description="field16" DisplayMethod="unsigned integer"/>
+        <Element Offset="36" Vartype="Byte" Bytesize="1" OffsetHex="00000024" Description="field17" DisplayMethod="unsigned integer"/>
+        <Element Offset="37" Vartype="Byte" Bytesize="1" OffsetHex="00000025" Description="field18" DisplayMethod="unsigned integer"/>
+        <Element Offset="38" Vartype="Byte" Bytesize="1" OffsetHex="00000026" Description="field19" DisplayMethod="unsigned integer"/>
+        <Element Offset="39" Vartype="Byte" Bytesize="1" OffsetHex="00000027" Description="field20" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="Byte" Bytesize="1" OffsetHex="00000028" Description="field21" DisplayMethod="unsigned integer"/>
+        <Element Offset="41" Vartype="Byte" Bytesize="1" OffsetHex="00000029" Description="field22" DisplayMethod="unsigned integer"/>
+        <Element Offset="42" Vartype="Byte" Bytesize="1" OffsetHex="0000002A" Description="field23" DisplayMethod="unsigned integer"/>
+        <Element Offset="43" Vartype="Byte" Bytesize="1" OffsetHex="0000002B" Description="field24" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="COLLISION" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000000" Description="x" DisplayMethod="signed integer"/>
+        <Element Offset="2" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000002" Description="y" DisplayMethod="signed integer"/>
+        <Element Offset="4" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000004" Description="w" DisplayMethod="unsigned integer"/>
+        <Element Offset="6" Vartype="2 Bytes" Bytesize="2" OffsetHex="00000006" Description="h" DisplayMethod="unsigned integer"/>
+        <Element Offset="8" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000008" Description="attr" DisplayMethod="unsigned integer"/>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000000C" Description="field5" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+  <LuaScript>-- Author: Dark Byte
+-- CE 7.5 Structure Dissect insert element error fix
+-- https://forum.cheatengine.org/viewtopic.php?p=5783154#5783154
+-- Sometimes when you insert a non-pointer element into a structure you'll get an error
+-- This script will prevent that error.
+-- It's fixed in Patreon, and eventually on main as well, but this is an easy fix to put in your autorun. The fix does the same.
+--
+-- Usage:
+--  Automatic; just copy this LUA file into CE's autorun folder
+
+function forEachAndFutureForm(classname, func)
+  local i
+  for i=0,getFormCount()-1 do
+    local f
+    f=getForm(i)
+    if f.ClassName==classname then
+      func(f)
+    end
+  end
+
+  registerFormAddNotification(function(f)
+    if classname==f.ClassName then
+      f.registerFirstShowCallback(function()
+        func(f)
+      end)
+    end
+  end)
+end
+
+forEachAndFutureForm('TfrmStructures2ElementInfo',function(f)
+  f.cbStructType.ItemIndex=0
+end)
+
+
+</LuaScript>
+</CheatTable>

@@ -1,0 +1,82 @@
+9:46 PM Thursday, January 2, 2025: first log
+	Decided to log my process modding ACPR with SAMMI support in mind, like Strive. Previously, I struggled to actually get the ACPR framework from Ryn to actually do anything, which ended in me full
+	deleting the folder just for the re-clone to work perfectly. Progressing from that has been relatively smooth. I set up a bunch of things to capture the game's data, but without good
+	logging/visualization tools, it's hard to tell which fields have good data or not. So I decided today to act a little out of order and connect the WebSockets server so I can log in the browser
+	which should be easier. Originally I was going to have the same setup I have in the Strive mod, with IXWebSocket directly integrated into the source tree. So, I imported the files to VS and then
+	had to work through renaming all of the includes in basically every file to get the visible errors to go away. Once that happened, there were a few link errors I've seen and dealt with before.
+	Unfortunately, I couldn't solve them so I decided to try other methods. Namely, that I install IXWS via vcpkg. This had its own array of problems. Once I actually got the manifest files setup,
+	I was wondering why it kept saying ixws wasn't in the microsoft git repo. Turns out that the example config file FROM MICROSOFT'S WEBSITE has a phony "local" git url in it and I just needed to
+	replace it with the live one to get everything working. This only partially solved the problem, as IXWS STILL had link issues seemingly related to mbedtls. It's important to note the IXWS is
+	configurable in what tls provider it uses, and whether it uses one at all. I'd like it to use none, as that has caused me trouble in other projects. Unfortunately, vcpkg has no direct way of
+	interacting with these configuration variables when ixws is getting cmake'd, so I was SOL there. So I switched to another library called websocketspp. It fortunately installed without tls issues
+	directly from vcpkg (thank god) and I was able to integrate its example message sending code relatively easily. This brings us to the current state of the code. It compiles, it's 90% the way
+	there to sending WS data to a browser at 60fps, but for some fucking reason the initalization code for the websockets server object (one of the asio library calls I think??) completely freezes
+	before the game can even start, rendering the entire executable stuck. I have tried to thread-ify a number of different ways, all of which haven't compiled. I've decided to leave it as-is for
+	tonight, in hopes of giving myself a break tomorrow will give me a better outlook and better ideas for the future of this project. I've also decided to start this dev diary document, similar
+	to the one I did in Germany, to put my thoughts down on virtual paper so they can stop banging around in my head. Hopefully, on all the future days that I work on this project, I'll put down some
+	thoughts in here to create a narrative of this development. This log will probably be longer than most since I wanted to provide some backstory to catch up to the present.
+	
+9:24 PM Saturday, January 4, 2025: in which there is both success and failure
+	Today was quite hectic, development-wise. After last-times' fiasco with vcpkg and the websocket servers, I decided today that I'd try yet another one in the hopes that it would work properly.
+	The first one I investigated is libwebsockets, a more low-level library. I looked at their example code and decided that it looked awful, so I moved on to the other WS provider I'd previously
+	researched, uWebSockets (u meaning micro). uWS is (in their own words) a very well known and widely-used library. Their example code made it clear what was happening and the fact that I could
+	simply opt out of using SSL meant I was in from the get-go. so I added it to the vcpkg manifest and downloaded it. My first implementation fell prey to the same problem I had last time: that
+	the "run the server" function call simply blocked the game from running. Fortunately, uWS had some "threaded" example code I could use, which went swimmingly, after a few missteps. So finally,
+	at long last, my little DLL is finally exporting the game state to the browser in a mostly usefull way. Hooray! Then the game crashed. Then the game didn't crash, but the OS popped up an error
+	message that said something had called "abort()". Then it crashed again. It wasn't exactly stable, if that wasn't clear. In the process of resolving these issues (as it is in fact, 3 things),
+	here is what I've figured out. 1) json.hpp doesn't do well with uninitalized data fields. This came up because I wasn't filling in all the data I was meaning to send out, so it eventually
+	nullpointered and exploded. 2) uWS is extremely anal about "corking" it's sockets. According to their docs it's a huge performance thing, and that it happens automatically when stuff is sent
+	inside the callbacks I define, but not outside. So, since I was kinda pirating the WS pointers to send data outside of the callbacks, it occasionally got pissy about corking. I'm guessing that
+	this is because I was trying to send a message while the previous one was being sent in addition to the aforementioned lack of corking. Even wrapping the send call in a cork call (as the docs
+	say is the correct thing to do in this instance) doesn't (I think) alleviate the issue. The eventual solution I settled on was having the external apps send messages to get data. That way my app
+	doesn't have to send outside of callbacks and doesn't need to care about when the data is sent in relation to other things. This isn't the optimal solution, as it puts greater stress on any
+	external apps to run constant "ask for data" loops, and it's possible something with the implementation is wonky as somtimes the data is inconsistent. In any case, that part currently works.
+	So, now that I was able to view my collected data more easily, I could immediately cull out fields that I didn't need. The flags, inputs, and seals sub-objects were all remove in short once I
+	saw that their values didn't update live. I was able to narrow down which of the three damage and hitcount fields actually mattered (though true, correct damage is still elusive).
+	Unfortunately, that run of good luck didn't last as I realized that I was only sending a few relatively inconsequential values per player. Not the type of things a commentator or viewer can't
+	already glean from just looking at the game's UI. So I fell back on my tried-and-true logging scheme, as tedious as it is, to try and weasel out which of the other non-obviously named values
+	had, well, value. This didn't turn up much, except I now have the RISC numbers. The unfortunate thing is that there are just two data structures that are pointed to in the main struct, but
+	weren't relevant to Ryn's original mod (from which my code forks), so she left them unpopulated. I'm sure if I had that data I'd be in a little better of a position, but not much of one.
+	All in all, a very productive day with a net positive. Things work, and data is being exported. Now I just need to find more interesting data and resolve some uWS bugs.
+	
+5:09 PM Sunday, January 5, 2025: In which I did almost nothing
+	I got the content of the structs I was missing from Ryn last night (cause I think she's more active at night than during the day). From that, I was able to glean that structs for ACPR were
+	remarkably similar to those of GGXplus, which I've previously loaded into ghidra thanks to its debug symbols. So I then spent most of the day filling in more ghidra inaccuracies to get a better
+	picture of how arcsys used the fields in 2001, so I could infer how they were using them in 2012. God these games are old. Didn't really turn up much, but that's ok. Tomorrow I'll actually
+	work on getting uWS to behave properly before I do any more data mucking.
+	
+5:19 PM Monday, January 6, 2025: In which I made some interesting discoveries
+	The highlight of today's work is that I managed to make uWS behave properly and not it's correctly sending message when I want it to, just like the other mods. After that, I changed how I did
+	logging. Up to now, I've had my own function for simultaneous console and file output which took advantage of a few Windows API calls. I noticed whenever I ran the game that a console window
+	would pop up, have some text on it for about a millisecond, then disappear where another console window took its place, bearing my own text. I figured this is because I was interacting with
+	the console in two ways, and that by only using the first way, I'd get simpler logging. Turns out I was completely correct and other people (unsurprisingly) had had this idea before me and had
+	posted their code to stackexchange. So I stole what I saw and now logging via std::cout and such works like normal. This also may potentially make visible any printouts from the game itself.
+	Because of this (and the general search for more interesting data) I opened up the ghidra project again. This time, I'd eventually find a "defined strings" tab that led me to interesting findings
+	Namely that there's a fair bit of debug text still left in the binary, seemingly related to the "synctest" (the network test available by pressing "Y" on the network tab) that had the names of
+	some familiar fields from Character_work. Because the binary doesn't contain debug symbols, figuring out what the function calls involving the text did was tricky. In most cases the text was
+	being sent to one of a few (maybe 5 or so) functions that usually took two pointer parameters. Sounds to me like they're just using standard std::cout, but nothing was being printed. I
+	investigated one of the "printing" functions a little more and found that there were a number of checks done before the text was involved, usually involving global data pointers and other
+	functions. Because of this I gave up trying to decipher what was blocking the prints in Ghidra and try it in Cheat Engine. Since CE allows me to get live function lists and break when I want,
+	it was relatively easy to trace the call tree of the function I wanted back to one I could breakpoint. Long story short, I didn't get it to print. I managed to BP on two functions that were on
+	the call tree, but wasn't able to figure out what I needed to change such that the print functions could be called. It's not a huge loss, since I can still access the data, but it would have
+	been fun to see what arcsys printed. The next things I need to do are hook round start and end related functions, which I've asked Ryn about, and then the rest of the TODO list is simple.
+	Obviously I still need more interesting data, but once round detection is in place I'll be much less worried about the state of the mod.
+	
+10:36 PM Monday, January 6, 2025: Major progress!
+	Ryn finally got back to me about the roundstart and end hooks, and after some CE testing I confirmed the proper addresses for both. Now I have hooks that affect when stateUpdate is sent and
+	sent messages themselves. Round start sends no data, and round end sends which player won and what frame. Or at least I'd like it to. Testing showed it always sent a 0, so I need to debug my
+	code a bit to figure out what i'm doing wrong. Like I said before, now I think the mod is in a much better place than it was before this. Now I can focus more on adding (and documenting)
+	interesting data fields.
+	
+8:07 PM Friday, January 10, 2025: not much change
+	Not much progress today. Mostly focused on data figuring-out without much luck. Started by completely screwing up entering in the playerentry struct into CE. Then I thought that static analysis
+	would be better so I (hopefully) finished changing function parameter to character_work in the GGX+ project. Once I'd started looking at the references to things I'd thought of an idea to make
+	all of character_work visible over the WS feed, as cumbersome as it would be to parse. So I tried to JSON-ify character_work and its related structs. Didn't go well. First because I ran into
+	a parameters limit on the JSON macro I use. And once that was figured out, the attendant c++ code that facilitated the transfer of data simply refused to compile for unclear reasons. So, I
+	scrapped that idea in favor of using VS' debugger to see the variables change. Also didn't work, because I could breakpoint when they were changed, but couldn't easily see what they were being
+	changed to! So I went back to what I was doing at the start of the day, mucking with Cheat Engine. This actually turned up some stuff, so now I have the character state as a number and hit level
+	as a number that doesn't make sense. I'm still having the perennial problem of only having access to fields that are also visible on the screen. This is a problem for me because I have soft
+	confirmation from Krackatoa that he may be able to get the ACPR tournament at Combo Breaker to use the mod. This is very exciting, but it puts me in the tricky position of having to make
+	available data that is interesting to commentators, since the usual crazy stream event schtick probably wouldn't land well with the CB organizers. The unfortunate thing therefore is that there
+	really isn't much data that ins't already make plain by simply looking at the screen while the game is playing. Because of that and because I'm going back to school in a few days, I've decided
+	to put this project on indefinite hold for the forseeable future.

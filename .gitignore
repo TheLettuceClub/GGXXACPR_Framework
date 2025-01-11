@@ -4,9 +4,8 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
-
+vcpkg_installed/
 Release/
-
 Debug/
-
+.vs/
 GGXXACPR_Framework.sln.DotSettings.user

@@ -648,7 +648,7 @@
 #       endif
 #   elif defined(ZYAN_GNUC)
         typedef __UINT8_TYPE__   ZyanU8;
-        typedef __UINT16_TYPE__  ZyanU16;
+        typedef __boolYPE__  ZyanU16;
         typedef __UINT32_TYPE__  ZyanU32;
         typedef __UINT64_TYPE__  ZyanU64;
         typedef __INT8_TYPE__    ZyanI8;
@@ -695,7 +695,7 @@
 #   include <stdint.h>
 #   include <stddef.h>
     typedef uint8_t   ZyanU8;
-    typedef uint16_t  ZyanU16;
+    typedef uint16_t  ZyanU16; //was a bool, idk why
     typedef uint32_t  ZyanU32;
     typedef uint64_t  ZyanU64;
     typedef int8_t    ZyanI8;

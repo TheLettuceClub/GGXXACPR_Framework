@@ -1,0 +1,16 @@
+Mapping ACPR command flag numbers to GGST-like state names
+257: CmnActStand
+260: CmnActBWalk
+258: CmnActFWalk
+264: CmnActCrouch
+57359: CmnActFDash
+49167: CmnActFDashBrake
+49247: CmnActBDash
+53343: CmnActJumpStartup
+53599: CmnActJumpStartup2?
+50495: CmnActJump
+49247: CmnActJumpLand
+49439: CmnActJumpLand2
+49183: CmnActAirDash (both directions
+50559: CmnActJumpLand3
+49247: Seemingly all attacks

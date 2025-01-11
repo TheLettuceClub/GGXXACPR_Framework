@@ -705,7 +705,7 @@ import std.compat;
 namespace safetyhook {
 union Xmm {
     uint8_t u8[16];
-    uint16_t u16[8];
+    bool u16[8];
     uint32_t u32[4];
     uint64_t u64[2];
     float f32[4];
