@@ -1,0 +1,22 @@
+00 = none
+40 = punch
+80 = kick
+10 = slash
+08 = hslash
+02 = dust
+20=taunt
+c4= p+k macro
+43=p+d macro
+f0=pks macro
+d8=pksh macro
+
+addr of button inputs - 1 byte is thing that seems to be directional input:
+00 = neutral
+80 = 4
+C0 = 1
+40 = 2
+60=3
+20=6
+30=9
+10=8
+90=7

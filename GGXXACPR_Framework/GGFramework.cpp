@@ -16,6 +16,8 @@ std::thread messageHandler;
 worker_t worker{};
 bool bRoundStarted = false;
 bool bRoundEnded = false;
+const CHARACTER_WORK* p1 = nullptr;
+const CHARACTER_WORK* p2 = nullptr;
 
 void initalizeWSServer() {
 	worker.thread = std::make_shared<std::thread>([]() {
@@ -37,8 +39,50 @@ void MessageHandler()
 {
 	while (true)
 	{
-		if (bRoundStarted) {
-			json j = updateMessage;
+		if (bRoundStarted && p1 && p2) {
+			StateUpdate newState{};
+			char p1DInputs = reinterpret_cast<char>(base + 0x6D0E80); //possible this has to be run in sync code, i.e. in the hook funcs
+			char p1PInputs = reinterpret_cast<char>(base + 0x6D0E81);
+			char p2DInputs = reinterpret_cast<char>(base + 0x6D0F19);
+			char p2PInputs = reinterpret_cast<char>(base + 0x6D0F19);
+			//maybe add camera struct later
+			newState.p1.health = p1->HitPoint;
+			newState.p1.CharID = p1->idno;
+			newState.p1.CleanHitCount = p1->ply->CleanHit_count;
+			newState.p1.damage = p1->ActHeader.damage; //according to ggxp-kor, true damage is on ActHeader, not DamActheader confirmed
+			newState.p1.direction = p1->dirflag;
+			newState.p1.hitCount = p2->ply->HitCount; //hit count is actually store in this variable on the other player
+			newState.p1.negativeVal = p1->ply->NegativeVal;
+			newState.p1.stun1 = p1->ply->FaintTime;
+			newState.p1.stun2 = p1->ply->FaintPoint;
+			newState.p1.tension = p1->ply->Tension;
+			newState.p1.tensionBalance = p1->ply->TensionBalance;
+			newState.p1.commandFlag = p1->actno;
+			newState.p1.RISC = p1->ply->GuardPoint;
+			newState.p1.hitLevel = p1->ActHeader.lvflag;
+			newState.p1.posx = p1->posx;
+			newState.p1.posy = p1->posy;
+			newState.p1.inputs = inputFiller(p1PInputs, p1DInputs);
+
+			//p2
+			newState.p2.health = p2->HitPoint;
+			newState.p2.CharID = p2->idno;
+			newState.p2.CleanHitCount = p2->ply->CleanHit_count;
+			newState.p2.damage = p2->ActHeader.damage;
+			newState.p2.direction = p2->dirflag;
+			newState.p2.hitCount = p1->ply->HitCount;
+			newState.p2.negativeVal = p2->ply->NegativeVal;
+			newState.p2.stun1 = p2->ply->FaintTime;
+			newState.p2.stun2 = p2->ply->FaintPoint;
+			newState.p2.tension = p2->ply->Tension;
+			newState.p2.tensionBalance = p2->ply->TensionBalance;
+			newState.p2.commandFlag = p2->actno;
+			newState.p2.RISC = p2->ply->GuardPoint;
+			newState.p2.hitLevel = p2->ActHeader.lvflag;
+			newState.p2.posx = p2->posx;
+			newState.p2.posy = p2->posy;
+			newState.p2.inputs = inputFiller(p2PInputs, p2DInputs);
+			json j = newState;
 			sendEvent("ggxx_stateUpdate", j.dump());
 			frameCounter++;
 			std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
@@ -50,86 +94,90 @@ void hook_InputCheck(SafetyHookContext& ctx) {
 	//printToConsole(L"hook_InputCheck called\r\n");
 	const CHARACTER_WORK* offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
 	const CHARACTER_WORK* otherPlayer;
-	//aquire relevant data, package, send
-	StateUpdate newState{};
-	newState.frameCount = frameCounter;
+	////aquire relevant data, package, send
+	//StateUpdate newState{};
+	//newState.frameCount = frameCounter;
 	if (offset->padid == 0) {
-		// then we've been given player 1, need to get p2
+	//	// then we've been given player 1, need to get p2
 		otherPlayer = offset + 1;
-		// now assemble the object and send
-		newState.p1.health = offset->HitPoint;
-		newState.p1.CharID = offset->idno;
-		newState.p1.CleanHitCount = offset->ply->CleanHit_count;
-		newState.p1.damage = offset->ActHeader.damage; //according to ggxp-kor, true damage is on ActHeader, not DamActheader confirmed
-		newState.p1.direction = offset->dirflag;
-		newState.p1.hitCount = offset->ply->HitCount;
-		newState.p1.negativeVal = offset->ply->NegativeVal;
-		newState.p1.stun1 = offset->ply->FaintTime;
-		newState.p1.stun2 = offset->ply->FaintPoint;
-		newState.p1.tension = offset->ply->Tension;
-		newState.p1.tensionBalance = offset->ply->TensionBalance;
-		newState.p1.commandFlag = offset->actno;
-		newState.p1.RISC = offset->ply->GuardPoint;
-		newState.p1.hitLevel = offset->ActHeader.lvflag;
+		p1 = offset;
+		p2 = otherPlayer;
+	//	// now assemble the object and send
+	//	newState.p1.health = offset->HitPoint;
+	//	newState.p1.CharID = offset->idno;
+	//	newState.p1.CleanHitCount = offset->ply->CleanHit_count;
+	//	newState.p1.damage = offset->ActHeader.damage; //according to ggxp-kor, true damage is on ActHeader, not DamActheader confirmed
+	//	newState.p1.direction = offset->dirflag;
+	//	newState.p1.hitCount = offset->ply->HitCount;
+	//	newState.p1.negativeVal = offset->ply->NegativeVal;
+	//	newState.p1.stun1 = offset->ply->FaintTime;
+	//	newState.p1.stun2 = offset->ply->FaintPoint;
+	//	newState.p1.tension = offset->ply->Tension;
+	//	newState.p1.tensionBalance = offset->ply->TensionBalance;
+	//	newState.p1.commandFlag = offset->actno;
+	//	newState.p1.RISC = offset->ply->GuardPoint;
+	//	newState.p1.hitLevel = offset->ActHeader.lvflag;
 
-		//p2
-		newState.p2.health = otherPlayer->HitPoint;
-		newState.p2.CharID = otherPlayer->idno;
-		newState.p2.CleanHitCount = otherPlayer->ply->CleanHit_count;
-		newState.p2.damage = otherPlayer->ActHeader.damage;
-		newState.p2.direction = otherPlayer->dirflag;
-		newState.p2.hitCount = otherPlayer->ply->HitCount;
-		newState.p2.negativeVal = otherPlayer->ply->NegativeVal;
-		newState.p2.stun1 = otherPlayer->ply->FaintTime;
-		newState.p2.stun2 = otherPlayer->ply->FaintPoint;
-		newState.p2.tension = otherPlayer->ply->Tension;
-		newState.p2.tensionBalance = otherPlayer->ply->TensionBalance;
-		newState.p2.commandFlag = otherPlayer->actno;
-		newState.p2.RISC = otherPlayer->ply->GuardPoint;
-		newState.p2.hitLevel = otherPlayer->ActHeader.lvflag;
+	//	//p2
+	//	newState.p2.health = otherPlayer->HitPoint;
+	//	newState.p2.CharID = otherPlayer->idno;
+	//	newState.p2.CleanHitCount = otherPlayer->ply->CleanHit_count;
+	//	newState.p2.damage = otherPlayer->ActHeader.damage;
+	//	newState.p2.direction = otherPlayer->dirflag;
+	//	newState.p2.hitCount = otherPlayer->ply->HitCount;
+	//	newState.p2.negativeVal = otherPlayer->ply->NegativeVal;
+	//	newState.p2.stun1 = otherPlayer->ply->FaintTime;
+	//	newState.p2.stun2 = otherPlayer->ply->FaintPoint;
+	//	newState.p2.tension = otherPlayer->ply->Tension;
+	//	newState.p2.tensionBalance = otherPlayer->ply->TensionBalance;
+	//	newState.p2.commandFlag = otherPlayer->actno;
+	//	newState.p2.RISC = otherPlayer->ply->GuardPoint;
+	//	newState.p2.hitLevel = otherPlayer->ActHeader.lvflag;
 	}
 	else if (offset->padid == 1) {
-		// we've been given p2, find p1
+	//	// we've been given p2, find p1
 		otherPlayer = offset - 1;
-		// now assemble the object and send
-		newState.p1.health = otherPlayer->HitPoint;
-		newState.p1.CharID = otherPlayer->idno;
-		newState.p1.CleanHitCount = otherPlayer->ply->CleanHit_count;
-		newState.p1.damage = otherPlayer->ActHeader.damage;
-		newState.p1.direction = otherPlayer->dirflag;
-		newState.p1.hitCount = otherPlayer->ply->HitCount;
-		newState.p1.negativeVal = otherPlayer->ply->NegativeVal;
-		newState.p1.stun1 = otherPlayer->ply->FaintTime;
-		newState.p1.stun2 = otherPlayer->ply->FaintPoint;
-		newState.p1.tension = otherPlayer->ply->Tension;
-		newState.p1.tensionBalance = otherPlayer->ply->TensionBalance;
-		newState.p1.commandFlag = otherPlayer->actno;
-		newState.p1.RISC = otherPlayer->ply->GuardPoint;
-		newState.p1.hitLevel = otherPlayer->ActHeader.lvflag;
+		p1 = otherPlayer;
+		p2 = offset;
+	//	// now assemble the object and send
+	//	newState.p1.health = otherPlayer->HitPoint;
+	//	newState.p1.CharID = otherPlayer->idno;
+	//	newState.p1.CleanHitCount = otherPlayer->ply->CleanHit_count;
+	//	newState.p1.damage = otherPlayer->ActHeader.damage;
+	//	newState.p1.direction = otherPlayer->dirflag;
+	//	newState.p1.hitCount = otherPlayer->ply->HitCount;
+	//	newState.p1.negativeVal = otherPlayer->ply->NegativeVal;
+	//	newState.p1.stun1 = otherPlayer->ply->FaintTime;
+	//	newState.p1.stun2 = otherPlayer->ply->FaintPoint;
+	//	newState.p1.tension = otherPlayer->ply->Tension;
+	//	newState.p1.tensionBalance = otherPlayer->ply->TensionBalance;
+	//	newState.p1.commandFlag = otherPlayer->actno;
+	//	newState.p1.RISC = otherPlayer->ply->GuardPoint;
+	//	newState.p1.hitLevel = otherPlayer->ActHeader.lvflag;
 
-		//p2
-		newState.p2.health = offset->HitPoint;
-		newState.p2.CharID = offset->idno;
-		newState.p2.CleanHitCount = offset->ply->CleanHit_count;
-		newState.p2.damage = offset->ActHeader.damage;
-		newState.p2.direction = offset->dirflag;
-		newState.p2.hitCount = offset->ply->HitCount;
-		newState.p2.negativeVal = offset->ply->NegativeVal;
-		newState.p2.stun1 = offset->ply->FaintTime;
-		newState.p2.stun2 = offset->ply->FaintPoint;
-		newState.p2.tension = offset->ply->Tension;
-		newState.p2.tensionBalance = offset->ply->TensionBalance;
-		newState.p2.commandFlag = offset->actno;
-		newState.p2.RISC = offset->ply->GuardPoint;
-		newState.p2.hitLevel = offset->ActHeader.lvflag;
+	//	//p2
+	//	newState.p2.health = offset->HitPoint;
+	//	newState.p2.CharID = offset->idno;
+	//	newState.p2.CleanHitCount = offset->ply->CleanHit_count;
+	//	newState.p2.damage = offset->ActHeader.damage;
+	//	newState.p2.direction = offset->dirflag;
+	//	newState.p2.hitCount = offset->ply->HitCount;
+	//	newState.p2.negativeVal = offset->ply->NegativeVal;
+	//	newState.p2.stun1 = offset->ply->FaintTime;
+	//	newState.p2.stun2 = offset->ply->FaintPoint;
+	//	newState.p2.tension = offset->ply->Tension;
+	//	newState.p2.tensionBalance = offset->ply->TensionBalance;
+	//	newState.p2.commandFlag = offset->actno;
+	//	newState.p2.RISC = offset->ply->GuardPoint;
+	//	newState.p2.hitLevel = offset->ActHeader.lvflag;
 	}
 	else {
-		// if something bad happens, do nothing
+	//	// if something bad happens, do nothing
 		return;
 	}
 
-	//then dump the json into the message sender
-	updateMessage = newState;
+	////then dump the json into the message sender
+	//updateMessage = newState;
 	bRoundStarted = true;
 }
 
@@ -142,6 +190,8 @@ void hook_RoundStart(SafetyHookContext& ctx) {
 
 void hook_RoundEndSkip(SafetyHookContext& ctx) { //called multiple times at least when not skipped, doesn't get called on time up
 	bRoundStarted = false;
+	p1 = nullptr; //check to make sure messagehandler is done?
+	p2 = nullptr;
 	if (!bRoundEnded) {
 		//eax at this point is ptr to one of the player entries, seemingly the loser
 		const auto loser = reinterpret_cast<CHARACTER_WORK*>(ctx.eax); 

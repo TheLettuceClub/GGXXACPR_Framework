@@ -2,4 +2,5 @@ TODO:
 find more interesting fields to use
 	CH state, hit level, guard type, etc
 decode actno and lvflag
+fix inputFiller
 write documentation

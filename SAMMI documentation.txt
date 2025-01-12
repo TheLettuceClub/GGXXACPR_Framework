@@ -8,14 +8,19 @@ data.eventInfo.*
 		health
 		damage
 		negativeVal
-		commandFlag (do not use)
+		commandFlag (not decoded)
 		stun1
 		stun2
 		tensionBalance
 		CleanHitCount
-		hitCount (broken?)
+		hitCount
 		RISC
-		hitLevel
+		hitLevel (not decoded)
+		posx
+		posy
+		Inputs (currently nonfunctional)
+			p,k,s,h,d,up,towards,away,down,pk,pks,pksh,pd,respect
+		
 
 "ggxx_roundEndEvent"
 data.eventInfo.*

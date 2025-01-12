@@ -3,6 +3,28 @@
 #include "GG.h"
 #include "json.hpp"
 
+struct Inputs {
+	//TODO fill in
+	bool up = false;
+	bool down = false;
+	bool towards = false; //yes, acpr actually has side-relative inputs, trust me
+	bool away = false;
+	bool p = false;
+	bool k = false;
+	bool s = false;
+	bool h = false;
+	bool d = false;
+	bool respect = false;
+	bool pk = false;
+	bool pd = false;
+	bool pks = false;
+	bool pksh = false;
+};
+
+Inputs inputFiller(char, char);
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Inputs, up, down, towards, away, p, k, s, h, d, respect, pk, pd, pks, pksh)
+
 struct Seals { //TODO: actually assign to these vars later
 	int jump{};
 	int arts{};
@@ -32,9 +54,12 @@ struct PlayerState { //TODO: expand to include more relevant data
 	int hitCount{};
 	int RISC{};
 	int hitLevel{};
+	int posx{};
+	int posy{};
+	Inputs inputs{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs)
 
 struct StateUpdate {
 	PlayerState p1{};

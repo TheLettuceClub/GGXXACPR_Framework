@@ -168,6 +168,7 @@
     <ClCompile Include="GGFramework.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="safetyhook.cpp" />
+    <ClCompile Include="SAMMITypes.cpp" />
     <ClCompile Include="WebSockets.cpp" />
     <ClCompile Include="Zydis.c" />
   </ItemGroup>
