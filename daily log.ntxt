@@ -80,3 +80,14 @@
 	available data that is interesting to commentators, since the usual crazy stream event schtick probably wouldn't land well with the CB organizers. The unfortunate thing therefore is that there
 	really isn't much data that ins't already make plain by simply looking at the screen while the game is playing. Because of that and because I'm going back to school in a few days, I've decided
 	to put this project on indefinite hold for the forseeable future.
+	
+12:35 PM Sunday, January 12, 2025: New developments!
+	Last night someone new in the Krack discord asked about ACPR data fields. Over the course of the conversation I learned a few important things. First, there's already a project (and an old one
+	at that) that visualizes hitboxes in ACPR and some other games. Second, that that project was recently forked by another person who has updated it to work with ACPR's rollback update. And most
+	importantly that there are direct pointers to the character_work structs I need at static offsets in memory. So today I set out to rearchitect my code to alleviate a known bug using this new
+	knowledge. The bug in question is that the state information I gather wasn't updating during most moves/combos, which made the whole "real-time" thing kinda pointless. Now that I'm not relying
+	on function hooks to slurp data I can send data at whatever speed I need. This is huge. That same person also sent me their Cheat table, which included some input flags. I've implemented them,
+	however I think the way I'm getting the pointers is incorrect, so the output data is completely wrong. Overall there are now more things to fix, but I've also added an equal amount of output,
+	so I'd call that roughly even. Now the project goes back on hiatus.
+	
+<>
