@@ -99,4 +99,13 @@
 	menu. So I hooked the function that prints a little bit of text to my terminal that seems to only happen when the "saving..." screen appears and now it basically always works. It'll still null pointer
 	if the game is alt-f4'ed, but this isn't something I can plan for so whatever. 
 
+12:21 PM Wednesday, January 15, 2025: Minor Improvements
+	Added some quick important things, corrected a boneheaded mistake, and figured something important out. I added (read as copied) code from Ryn's mod to hook the character select screen. Just like the
+	"saving..." hook, I wanted to do this so that the message handler thread stopped after a versus game went back to CS. I also wanted to fix my buggy "who won" code, as it has always output a 0. Turns out
+	I'd left a "whoWon = 0;" line after the code where I figure out who won, so now it works properly. Finally I figured out that whatever I'm doing to try and get the absolute ptr to the CW structs just
+	isn't going to work, so I just won't do it. p1 and p2 get set just fine on the first call to the input hook and my grand ideas about sending data in the round start event were a little far fetched.
+	I wouldn't have done any of this today if Krackatoa hadn't told me that he plans to make some kind of Balatro-esque mini-game for Frosty Faustings, which is in a few weeks. Based on the things he
+	told me, I figured that his efforts would be made easier by these changes, so I expedited them. At this point the mod is in a pretty good place. There are certainly more things to do, but school
+	must come first, so development on this mod for the next ~7 weeks will be much slower.
+	
 <>

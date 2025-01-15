@@ -25,7 +25,7 @@ data.eventInfo.*
 "ggxx_roundEndEvent"
 data.eventInfo.*
 	frameCount
-	whoWon (broken)
+	whoWon
 
 "ggxx_roundStartEvent"
 no fields

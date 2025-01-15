@@ -18,6 +18,9 @@ private:
 	SafetyHookMid RoundInitHook;
 	SafetyHookMid RoundEndHook;
 	SafetyHookMid GameModeHook;
+	SafetyHookMid chara_select_hook_;
+	SafetyHookMid chara_select_hook_2_;
+	SafetyHookMid chara_select_hook_3_;
 	auto initialize() -> void;
 
 public:

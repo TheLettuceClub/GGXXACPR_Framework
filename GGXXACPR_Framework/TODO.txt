@@ -2,6 +2,5 @@ TODO:
 find more interesting fields to use
 	CH state, hit level, guard type, etc
 decode actno and lvflag
-fix inputFiller
-find a place to hook that happens when training mode exits
+crashes on arcade loss, another hook
 write documentation

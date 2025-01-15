@@ -18,7 +18,7 @@ bool bRoundStarted = false;
 bool bRoundEnded = false;
 const CHARACTER_WORK* p1 = nullptr;
 const CHARACTER_WORK* p2 = nullptr;
-const char* p1DInputs = 0;
+const char* p1DInputs = nullptr;
 const char* p1PInputs = nullptr;
 const char* p2DInputs = nullptr;
 const char* p2PInputs = nullptr;
@@ -125,13 +125,13 @@ void hook_RoundStart(SafetyHookContext& ctx) {
 	std::thread(sendEvent, "ggxx_roundStartEvent", "{}").detach();
 }
 
-void hook_RoundEndSkip(SafetyHookContext& ctx) { //called multiple times at least when not skipped, doesn't get called on time up
+void hook_RoundEndSkip(SafetyHookContext& ctx) { //might not get called on time up
 	bRoundStarted = false;
 	if (!bRoundEnded) {
 		//eax at this point is ptr to one of the player entries, seemingly the loser
 		const auto loser = reinterpret_cast<CHARACTER_WORK*>(ctx.eax); 
 		RoundEndEvent ree{};
-		if (loser->padid == 0) { //TODO: this isn't working, idk why, to debug
+		if (loser->padid == 0) {
 			ree.whoWon = 2; //2 meaning player 2 (ofc)
 		}
 		else if (loser->padid == 1) {
@@ -140,7 +140,6 @@ void hook_RoundEndSkip(SafetyHookContext& ctx) { //called multiple times at leas
 		else {
 			ree.whoWon = 0;
 		}
-		ree.whoWon = 0;
 		ree.frameCount = frameCounter;
 		json j = ree;
 		std::thread(sendEvent, "ggxx_roundEndEvent", j.dump()).detach();
@@ -148,9 +147,14 @@ void hook_RoundEndSkip(SafetyHookContext& ctx) { //called multiple times at leas
 	bRoundEnded = true;
 }
 
-void hook_GameModeChange(SafetyHookContext& ctx) { // kind of a baid-aid for the crashed after properly leaving training mode
+void hook_GameModeChange(SafetyHookContext& ctx) { // kind of a baid-aid for the crashed after properly leaving training mode bug
 	bRoundStarted = false;
 	bRoundEnded = true;
+}
+
+void hook_CharaSelect(SafetyHookContext& ctx) { // executes a bunch of times on any charaselect
+	bRoundStarted = false;
+	bRoundEnded = false;
 }
 
 auto GGFramework::initialize() -> void
@@ -160,6 +164,9 @@ auto GGFramework::initialize() -> void
 	RoundInitHook = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1D1360, hook_RoundStart);
 	RoundEndHook = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1D4AE2, hook_RoundEndSkip);
 	GameModeHook = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1c2be9, hook_GameModeChange);
+	chara_select_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1fe02d, hook_CharaSelect);
+	chara_select_hook_2_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1F97AE, hook_CharaSelect);
+	chara_select_hook_3_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1f98bd, hook_CharaSelect);
 }
 
 
