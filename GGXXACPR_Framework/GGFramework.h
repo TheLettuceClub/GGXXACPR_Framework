@@ -17,6 +17,7 @@ private:
 	SafetyHookMid input_check_hook_;
 	SafetyHookMid RoundInitHook;
 	SafetyHookMid RoundEndHook;
+	SafetyHookMid GameModeHook;
 	auto initialize() -> void;
 
 public:

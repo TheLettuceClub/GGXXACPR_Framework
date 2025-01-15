@@ -8,4 +8,5 @@ vcpkg_installed/
 Release/
 Debug/
 .vs/
-GGXXACPR_Framework.sln.DotSettings.user
+*.bak
+

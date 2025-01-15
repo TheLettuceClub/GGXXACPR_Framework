@@ -90,4 +90,13 @@
 	however I think the way I'm getting the pointers is incorrect, so the output data is completely wrong. Overall there are now more things to fix, but I've also added an equal amount of output,
 	so I'd call that roughly even. Now the project goes back on hiatus.
 	
+7:25 PM Tuesday, January 14, 2025: Good stuff
+	Right after I released the previous version, Krack told me that it simply didn't output anything (and later crashed immediately). I unfortuately was unable to diagnose the exact cause, but I've
+	subjected this build to greater testing so I'm more positive it will work than before. In terms of what has changed, a lot. Namely the input accessing thing I tried to do last time has been fixed
+	I think I was formatting the casts wrong, so the pointers came out mangled. I also implemented a little band-aid for a crash that's been annoying me. Because I'm not attempting to access game
+	memory from a thread, I need to tell the thread to stop before that memory gets freed by the game. In a versus game, usually the game ends and the end game hook I have would stop the thread before
+	the game could possibly be closed. However if you were to exit from training mode using the menu, end game would never happen, leaving the thread still running despite the fact the game is on the main
+	menu. So I hooked the function that prints a little bit of text to my terminal that seems to only happen when the "saving..." screen appears and now it basically always works. It'll still null pointer
+	if the game is alt-f4'ed, but this isn't something I can plan for so whatever. 
+
 <>

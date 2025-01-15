@@ -18,7 +18,7 @@ data.eventInfo.*
 		hitLevel (not decoded)
 		posx
 		posy
-		Inputs (currently nonfunctional)
+		inputs
 			p,k,s,h,d,up,towards,away,down,pk,pks,pksh,pd,respect
 		
 
@@ -26,3 +26,6 @@ data.eventInfo.*
 data.eventInfo.*
 	frameCount
 	whoWon (broken)
+
+"ggxx_roundStartEvent"
+no fields
