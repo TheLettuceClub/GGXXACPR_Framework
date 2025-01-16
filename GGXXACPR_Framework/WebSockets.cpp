@@ -19,10 +19,10 @@ void worker_t::work() {
 		}).listen(port, [this](us_listen_socket_t* token) {
 			listen_socket = token;
 			if (listen_socket) {
-				std::cout << "listening on port" << std::endl;
+				std::cout << "listening on port " << port << std::endl;
 			}
 			else {
-				std::cout << "failed to listen on port" << std::endl;
+				std::cout << "failed to listen on port " << port << std::endl;
 			}
 		}).run();
 }

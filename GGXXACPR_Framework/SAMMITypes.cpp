@@ -46,3 +46,16 @@ Inputs inputFiller(char inputFlag, char dirFlag) { //TODO: fix, completely nonwo
 	}
 	return newIn;
 }
+
+Seals sealFiller(PLAYER_ENTRY* ply) {
+	Seals newSe{};
+	newSe.arts = ply->ArtsSeal;
+	newSe.dash = ply->DashSeal;
+	newSe.dust = ply->DustSeal;
+	newSe.hslash = ply->HeavySlashSeal;
+	newSe.kick = ply->KickSeal;
+	newSe.jump = ply->JumpSeal;
+	newSe.punch = ply->PunchSeal;
+	newSe.slash = ply->SlashSeal;
+	return newSe;
+}

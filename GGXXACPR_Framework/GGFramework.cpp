@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "SAMMITypes.hpp"
 #include "WebSockets.hpp"
-#include <iostream>
+#include <signal.h>
 
 GGFramework* GGFramework::instance_ = nullptr;
 std::mutex GGFramework::mtx_{};
@@ -11,11 +11,11 @@ using json = nlohmann::json;
 
 HMODULE base;
 unsigned long int frameCounter = 0;
-//json updateMessage{};
 std::thread messageHandler;
 worker_t worker{};
 bool bRoundStarted = false;
 bool bRoundEnded = false;
+bool bInputHookLockout = false;
 const CHARACTER_WORK* p1 = nullptr;
 const CHARACTER_WORK* p2 = nullptr;
 const char* p1DInputs = nullptr;
@@ -39,9 +39,15 @@ void sendEvent(std::string eventName, std::string customData) {
 		});
 }
 
+void SignalHandler(int signal) {
+	std::cout << "Signal: " << signal << std::endl;
+	throw "!Access Vioation!";
+}
+
 void MessageHandler()
 {
 	std::cout << "Message Handler running" << std::endl;
+	signal(SIGSEGV, SignalHandler);
 	while (true)
 	{
 		if (bRoundStarted && p1 && p2) {
@@ -66,6 +72,7 @@ void MessageHandler()
 				newState.p1.posx = p1->posx;
 				newState.p1.posy = p1->posy;
 				newState.p1.inputs = inputFiller(*p1PInputs, *p1DInputs);
+				newState.p1.seals = sealFiller(p1->ply);
 
 				//p2
 				newState.p2.health = p2->HitPoint;
@@ -85,38 +92,42 @@ void MessageHandler()
 				newState.p2.posx = p2->posx;
 				newState.p2.posy = p2->posy;
 				newState.p2.inputs = inputFiller(*p2PInputs, *p2DInputs);
+				newState.p2.seals = sealFiller(p2->ply);
+				json j = newState;
+				std::thread(sendEvent, "ggxx_stateUpdate", j.dump()).detach();
+				frameCounter++;
 			}
-			catch (std::exception e) {
-				std::cerr << "Message Handler caught error: " << e.what() << std::endl;
+			catch (...) {
+				std::cerr << "Message Handler caught error" << std::endl;
 			}
-			json j = newState;
-			std::thread(sendEvent, "ggxx_stateUpdate", j.dump()).detach();
-			frameCounter++;
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
 	}
 }
 
 void hook_InputCheck(SafetyHookContext& ctx) {
-	//ctx.esi is ptr to one of the cw structs
-	const CHARACTER_WORK* offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
-	const CHARACTER_WORK* other;
-	if (offset->padid == 0) {
-		other = offset + 1;
-		p1 = offset;
-		p2 = other;
+	if (!bInputHookLockout) {
+		//ctx.esi is ptr to one of the cw structs
+		const CHARACTER_WORK* offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
+		const CHARACTER_WORK* other;
+		if (offset->padid == 0) {
+			other = offset + 1;
+			p1 = offset;
+			p2 = other;
+		}
+		else if (offset->padid == 1) {
+			other = offset - 1;
+			p1 = other;
+			p2 = offset;
+		}
+		bRoundStarted = true;
 	}
-	else if (offset->padid == 1) {
-		other = offset - 1;
-		p1 = other;
-		p2 = offset;
-	}
-	bRoundStarted = true;
 }
 
 void hook_RoundStart(SafetyHookContext& ctx) {
 	bRoundStarted = true;
 	bRoundEnded = false;
+	bInputHookLockout = false;
 	frameCounter = 0;
 	p1DInputs = reinterpret_cast<char*>(base) + 0x6D0E80; // now functional
 	p1PInputs = reinterpret_cast<char*>(base) + 0x6D0E81;
@@ -127,6 +138,7 @@ void hook_RoundStart(SafetyHookContext& ctx) {
 
 void hook_RoundEndSkip(SafetyHookContext& ctx) { //might not get called on time up
 	bRoundStarted = false;
+	bInputHookLockout = true;
 	if (!bRoundEnded) {
 		//eax at this point is ptr to one of the player entries, seemingly the loser
 		const auto loser = reinterpret_cast<CHARACTER_WORK*>(ctx.eax); 
@@ -150,11 +162,13 @@ void hook_RoundEndSkip(SafetyHookContext& ctx) { //might not get called on time 
 void hook_GameModeChange(SafetyHookContext& ctx) { // kind of a baid-aid for the crashed after properly leaving training mode bug
 	bRoundStarted = false;
 	bRoundEnded = true;
+	bInputHookLockout = true;
 }
 
 void hook_CharaSelect(SafetyHookContext& ctx) { // executes a bunch of times on any charaselect
 	bRoundStarted = false;
 	bRoundEnded = false;
+	bInputHookLockout = false;
 }
 
 auto GGFramework::initialize() -> void

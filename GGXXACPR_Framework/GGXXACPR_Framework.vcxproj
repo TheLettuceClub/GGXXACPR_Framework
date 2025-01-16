@@ -102,6 +102,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,6 +136,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -166,6 +168,7 @@
     <ClCompile Include="dinput8.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="GGFramework.cpp" />
+    <ClCompile Include="pch.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="safetyhook.cpp" />
     <ClCompile Include="SAMMITypes.cpp" />

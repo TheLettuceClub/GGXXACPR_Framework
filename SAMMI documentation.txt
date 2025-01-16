@@ -3,23 +3,25 @@ Connect via WS/SAMMI/etc
 data.eventInfo.*
 	framecount
 	p1/2
-		CharID
+		CharID (string)
 		direction
 		health
-		damage
+		damage (unscaled damage of current attack)
 		negativeVal
 		commandFlag (not decoded)
-		stun1
-		stun2
+		stun1 (timer once stunned)
+		stun2 (up-counting stun value, unknown maximum)
 		tensionBalance
-		CleanHitCount
+		CleanHitCount (number of clean hits in combo?? 65535 if one hasn't occurred)
 		hitCount
 		RISC
 		hitLevel (not decoded)
-		posx
-		posy
-		inputs
+		posx (0 is the left/right center of the stage)
+		posy (0 is the ground)
+		inputs (booleans)
 			p,k,s,h,d,up,towards,away,down,pk,pks,pksh,pd,respect
+		seals (timers, 0 unless that player has been hit by Baiken GC Baku followups)
+			arts, dash, dust, hslash, kick, jump, punch, slash
 		
 
 "ggxx_roundEndEvent"

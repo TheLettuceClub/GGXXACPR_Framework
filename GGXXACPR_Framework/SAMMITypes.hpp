@@ -36,6 +36,8 @@ struct Seals { //TODO: actually assign to these vars later
 	int dust{};
 };
 
+Seals sealFiller(PLAYER_ENTRY*);
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Seals, jump, arts, dash, punch, kick, slash, hslash, dust)
 
 struct PlayerState { //TODO: expand to include more relevant data
@@ -49,7 +51,7 @@ struct PlayerState { //TODO: expand to include more relevant data
 	int stun1{};
 	int stun2{};
 	int tensionBalance{};
-	//Seals seal{};
+	Seals seals{};
 	int CleanHitCount{};
 	int hitCount{};
 	int RISC{};
@@ -59,7 +61,7 @@ struct PlayerState { //TODO: expand to include more relevant data
 	Inputs inputs{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals)
 
 struct StateUpdate {
 	PlayerState p1{};
