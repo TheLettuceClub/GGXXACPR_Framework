@@ -49,9 +49,9 @@ struct PLAYER_ENTRY
 	uint16_t Tension;
 	char ShakeTime;
 	char BackStepInvalid;
-	uint16_t BaseComboDamage;
+	uint16_t BaseComboDamage; //initial combo proration, normally 100, assigned on character getting hit!
 	int16_t NegativeVal;
-	char counterredtime;
+	char counterredtime; //descriptive
 	char pad_h;
 	int16_t pactst;
 	int32_t homingtime;
@@ -68,14 +68,14 @@ struct PLAYER_ENTRY
 	float hitDispIn;
 	uint8_t inertiaflag;
 	uint8_t whiteouttime;
-	char MutekiTime; //invuln time after air tech
+	char MutekiTime; //invuln time after air tech/wakeup/etc
 	uint8_t maintain; //unknown, always 0
 	uint8_t SkyDashCorrect;
 	uint8_t inertiatime;
 	uint8_t DownBoundDamage;
 	uint8_t TensionPenaltyTime;
-	uint16_t RomanCancelTime;
-	uint8_t RomanCancelIgnoreTime;
+	uint16_t RomanCancelTime; // tension penalty timer
+	uint8_t RomanCancelIgnoreTime; // set if miss FRC window?
 	uint8_t bIgnoreBomberMuteki;
 	char TensionHandicap;
 	uint8_t NormalAttackDisableFlag;

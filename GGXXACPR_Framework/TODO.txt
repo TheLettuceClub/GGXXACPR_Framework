@@ -4,3 +4,7 @@ find more interesting fields to use
 decode actno and lvflag
 crashes on arcade loss, another hook
 write documentation
+round and timer info
+Steam IDs
+get code that runs during normals from CE find address
+	wakeup if possible

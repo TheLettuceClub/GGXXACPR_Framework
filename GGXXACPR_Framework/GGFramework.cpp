@@ -98,6 +98,9 @@ void MessageHandler()
 				newState.p1.guard.JustGuardIgnoreTime = p1->ply->JustGuardIgnoreTime;
 				newState.p1.guard.JustGuardTime = p1->ply->JustGuardTime;
 				newState.p1.guard.notThrowTime = p1->ply->notThrowTime;
+				newState.p1.initialProration = p2->ply->BaseComboDamage;
+				newState.p1.invincibleTime = p1->ply->MutekiTime;
+				newState.p1.tensionPenaltyTime = p1->ply->RomanCancelTime;
 
 				//p2
 				newState.p2.health = p2->HitPoint;
@@ -130,6 +133,9 @@ void MessageHandler()
 				newState.p2.guard.JustGuardIgnoreTime = p2->ply->JustGuardIgnoreTime;
 				newState.p2.guard.JustGuardTime = p2->ply->JustGuardTime;
 				newState.p2.guard.notThrowTime = p2->ply->notThrowTime;
+				newState.p2.initialProration = p1->ply->BaseComboDamage;
+				newState.p2.invincibleTime = p2->ply->MutekiTime;
+				newState.p2.tensionPenaltyTime = p2->ply->RomanCancelTime;
 
 				json j = newState;
 				std::thread(sendEvent, "ggxx_stateUpdate", j.dump()).detach();

@@ -77,9 +77,12 @@ struct PlayerState {
 	int posy{};
 	Inputs inputs{};
 	GuardStuff guard{};
+	int invincibleTime{};
+	int initialProration{};
+	int tensionPenaltyTime{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals, guard)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, invincibleTime, initialProration, tensionPenaltyTime, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals, guard)
 
 struct Camera {
 	int camXCenter{};
