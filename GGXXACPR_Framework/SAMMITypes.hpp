@@ -40,7 +40,24 @@ Seals sealFiller(PLAYER_ENTRY*);
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Seals, jump, arts, dash, punch, kick, slash, hslash, dust)
 
-struct PlayerState { //TODO: expand to include more relevant data
+struct GuardStuff {
+	int guardSt{};
+	int FaultlessDefenceDisableTime{};
+	int JustFD_EnableCounter{};
+	int JustFD_GuardDisableCounter{};
+	int JustFD_ColorCounter{};
+	int JustFD_ReversalIgnoreTimer{};
+	int JustFD_EasyCounter{};
+	int JustFD_Flag{};
+	int notThrowTime{}; //throw invuln time
+	int JustGuardTime{};
+	int JustGuardIgnoreTime{};
+	int JGWhiteTime{};
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GuardStuff, guardSt, FaultlessDefenceDisableTime, JustFD_EnableCounter, JustFD_GuardDisableCounter, JustFD_ColorCounter, JustFD_ReversalIgnoreTimer, JustFD_EasyCounter, JustFD_Flag, notThrowTime, JustGuardTime, JustGuardIgnoreTime, JGWhiteTime)
+
+struct PlayerState {
 	CharacterID CharID{};
 	int direction{};
 	int health{};
@@ -59,17 +76,30 @@ struct PlayerState { //TODO: expand to include more relevant data
 	int posx{};
 	int posy{};
 	Inputs inputs{};
+	GuardStuff guard{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals, guard)
+
+struct Camera {
+	int camXCenter{};
+	int camLeftEdge{};
+	int camBottomEdge{};
+	int camWidth{};
+	int camHeight{};
+	float camZoom{};
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Camera, camXCenter, camLeftEdge, camWidth, camHeight, camZoom, camBottomEdge)
 
 struct StateUpdate {
 	PlayerState p1{};
 	PlayerState p2{};
+	Camera cam{};
 	unsigned long int frameCount{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StateUpdate, p1, p2, frameCount)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StateUpdate, p1, p2, cam, frameCount)
 
 struct RoundEndEvent {
 	int whoWon{};

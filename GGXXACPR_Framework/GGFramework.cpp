@@ -22,6 +22,12 @@ const char* p1DInputs = nullptr;
 const char* p1PInputs = nullptr;
 const char* p2DInputs = nullptr;
 const char* p2PInputs = nullptr;
+const int* camXCenter = nullptr;
+const int* camBottomEdge = nullptr;
+const int* camLeftEdge = nullptr;
+const int* camWidth = nullptr;
+const int* camHeight = nullptr;
+const float* camZoom = nullptr;
 
 void initalizeWSServer() {
 	worker.thread = std::make_shared<std::thread>([]() {
@@ -55,6 +61,13 @@ void MessageHandler()
 			//maybe add camera struct later
 			try {
 				newState.frameCount = frameCounter;
+				newState.cam.camHeight = *camHeight;
+				newState.cam.camLeftEdge = *camLeftEdge;
+				newState.cam.camWidth = *camWidth;
+				newState.cam.camBottomEdge = *camBottomEdge;
+				newState.cam.camXCenter = *camXCenter;
+				newState.cam.camZoom = *camZoom;
+
 				newState.p1.health = p1->HitPoint;
 				newState.p1.CharID = p1->idno;
 				newState.p1.CleanHitCount = p1->ply->CleanHit_count;
@@ -73,6 +86,18 @@ void MessageHandler()
 				newState.p1.posy = p1->posy;
 				newState.p1.inputs = inputFiller(*p1PInputs, *p1DInputs);
 				newState.p1.seals = sealFiller(p1->ply);
+				newState.p1.guard.FaultlessDefenceDisableTime = p1->ply->FaultlessDefenceDisableTime;
+				newState.p1.guard.guardSt = p1->GuardSt;
+				newState.p1.guard.JGWhiteTime = p1->ply->JGWhiteTime;
+				newState.p1.guard.JustFD_ColorCounter = p1->ply->JustFD_ColorCounter;
+				newState.p1.guard.JustFD_EasyCounter = p1->ply->JustFD_EasyCounter;
+				newState.p1.guard.JustFD_EnableCounter = p1->ply->JustFD_EnableCounter;
+				newState.p1.guard.JustFD_Flag = p1->ply->JustFD_Flag;
+				newState.p1.guard.JustFD_GuardDisableCounter = p1->ply->JustFD_GuardDisableCounter;
+				newState.p1.guard.JustFD_ReversalIgnoreTimer = p1->ply->JustFD_ReversalIgnoreTimer;
+				newState.p1.guard.JustGuardIgnoreTime = p1->ply->JustGuardIgnoreTime;
+				newState.p1.guard.JustGuardTime = p1->ply->JustGuardTime;
+				newState.p1.guard.notThrowTime = p1->ply->notThrowTime;
 
 				//p2
 				newState.p2.health = p2->HitPoint;
@@ -93,6 +118,19 @@ void MessageHandler()
 				newState.p2.posy = p2->posy;
 				newState.p2.inputs = inputFiller(*p2PInputs, *p2DInputs);
 				newState.p2.seals = sealFiller(p2->ply);
+				newState.p2.guard.FaultlessDefenceDisableTime = p2->ply->FaultlessDefenceDisableTime;
+				newState.p2.guard.guardSt = p2->GuardSt;
+				newState.p2.guard.JGWhiteTime = p2->ply->JGWhiteTime;
+				newState.p2.guard.JustFD_ColorCounter = p2->ply->JustFD_ColorCounter;
+				newState.p2.guard.JustFD_EasyCounter = p2->ply->JustFD_EasyCounter;
+				newState.p2.guard.JustFD_EnableCounter = p2->ply->JustFD_EnableCounter;
+				newState.p2.guard.JustFD_Flag = p2->ply->JustFD_Flag;
+				newState.p2.guard.JustFD_GuardDisableCounter = p2->ply->JustFD_GuardDisableCounter;
+				newState.p2.guard.JustFD_ReversalIgnoreTimer = p2->ply->JustFD_ReversalIgnoreTimer;
+				newState.p2.guard.JustGuardIgnoreTime = p2->ply->JustGuardIgnoreTime;
+				newState.p2.guard.JustGuardTime = p2->ply->JustGuardTime;
+				newState.p2.guard.notThrowTime = p2->ply->notThrowTime;
+
 				json j = newState;
 				std::thread(sendEvent, "ggxx_stateUpdate", j.dump()).detach();
 				frameCounter++;
@@ -133,6 +171,13 @@ void hook_RoundStart(SafetyHookContext& ctx) {
 	p1PInputs = reinterpret_cast<char*>(base) + 0x6D0E81;
 	p2DInputs = reinterpret_cast<char*>(base) + 0x6D0F18;
 	p2PInputs = reinterpret_cast<char*>(base) + 0x6D0F19;
+
+	camXCenter = (int*)(reinterpret_cast<char*>(base) + 0x6D5CE4);
+	camBottomEdge = (int*)(reinterpret_cast<char*>(base) + 0x6D5CE8);
+	camLeftEdge = (int*)(reinterpret_cast<char*>(base) + 0x6D5CF4);
+	camWidth = (int*)(reinterpret_cast<char*>(base) + 0x6D5CFC);
+	camHeight = (int*)(reinterpret_cast<char*>(base) + 0x6D5D00);
+	camZoom = (float*)(reinterpret_cast<char*>(base) + 0x6D5D18);
 	std::thread(sendEvent, "ggxx_roundStartEvent", "{}").detach();
 }
 

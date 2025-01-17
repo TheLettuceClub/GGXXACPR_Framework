@@ -22,6 +22,10 @@ data.eventInfo.*
 			p,k,s,h,d,up,towards,away,down,pk,pks,pksh,pd,respect
 		seals (timers, 0 unless that player has been hit by Baiken GC Baku followups)
 			arts, dash, dust, hslash, kick, jump, punch, slash
+		guard (guard related timers and flags, all ints)
+			guardSt, FaultlessDefenceDisableTime JustFD_EnableCounter, JustFD_GuardDisableCounter, JustFD_ColorCounter, JustFD_ReversalIgnoreTimer, JustFD_EasyCounter, JustFD_Flag, notThrowTime, JustGuardTime, JustGuardIgnoreTime, JGWhiteTime
+	cam (camera values, all ints except zoom which is float)
+		camXCenter, camLeftEdge, camBottomEdge, camWidth, camHeight, camZoom
 		
 
 "ggxx_roundEndEvent"

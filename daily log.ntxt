@@ -112,4 +112,10 @@
 	Had some more crash reports from Krack, so I fixed them and some others. Now it *shouldn't* crash when correctly closing the game or when switching characters in training mode. Also I added Baiken's
 	seal timers. I've been meaning to do it for a while, and I did it now so this could be a slightly larger update. Time to play KOF.
 	
+11:20 AM Friday, January 17, 2025: Adding more things
+	Wasn't able to work on the mod yesterday due to a very packed schedule. Fortunately class was cancelled today so I have hella free time. Krack was working on a SB detector yesterday and the discussion
+	around that led me to add a bunch of guard-related fields to help with that effort. I added them today along with some camera values. Actually getting the correct pointers to those camera values was a
+	pain though, as for entirely unclear reasons the address was being set incorrectly until I changed the cast from an int to a char and then suddenly it worked fine. If it's cursed but it works then it
+	isn't cursed I guess? It certainly seems like the disparate values I'm getting are part of a larger structure, so I'd like to implement that at some point.
+
 <>
