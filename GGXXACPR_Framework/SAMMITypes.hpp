@@ -62,15 +62,12 @@ struct PlayerState {
 	int direction{};
 	int health{};
 	int tension{};
-	int damage{};
 	int negativeVal{};
 	int commandFlag{};
 	int stun1{};
 	int stun2{};
 	int tensionBalance{};
 	Seals seals{};
-	int CleanHitCount{};
-	int hitCount{};
 	int RISC{};
 	int hitLevel{};
 	int posx{};
@@ -78,11 +75,10 @@ struct PlayerState {
 	Inputs inputs{};
 	GuardStuff guard{};
 	int invincibleTime{};
-	int initialProration{};
 	int tensionPenaltyTime{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, invincibleTime, initialProration, tensionPenaltyTime, CharID, direction, health, tension, damage, negativeVal, commandFlag, stun1, stun2, tensionBalance, CleanHitCount, hitCount, RISC, hitLevel, posx, posy, inputs, seals, guard)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, invincibleTime, tensionPenaltyTime, CharID, direction, health, tension, negativeVal, commandFlag, stun1, stun2, tensionBalance, RISC, posx, posy, inputs, seals, guard)
 
 struct Camera {
 	int camXCenter{};
@@ -110,6 +106,32 @@ struct RoundEndEvent {
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(RoundEndEvent, whoWon, frameCount)
+
+struct HitEvent {
+	int damage{};
+	unsigned long int frameCount{};
+	int attackerActNo{};
+	int defenderActNo{};
+	int defenderPrevActNo{};
+	int hitCount{};
+	int initialProration{};
+	int CleanHitCount{};
+	CharacterID idno{};
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HitEvent, idno, damage, frameCount, attackerActNo, defenderPrevActNo, defenderActNo, hitCount, initialProration, CleanHitCount)
+
+struct KnockDownEvent {
+	CharacterID idno{};
+	int attackerActNo{};
+	int defenderActNo{};
+	int defenderPrevActNo{};
+	int downTimer{};
+	int downFlag{};
+	unsigned long int frameCount{};
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(KnockDownEvent, downFlag, idno, attackerActNo, defenderActNo, defenderPrevActNo, downTimer, frameCount)
 
 NLOHMANN_JSON_SERIALIZE_ENUM(CharacterID, {
 										   {CharacterID::Dummy_Random, "Dummy_Random"},

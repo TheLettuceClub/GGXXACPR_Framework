@@ -21,6 +21,8 @@ private:
 	SafetyHookMid chara_select_hook_;
 	SafetyHookMid chara_select_hook_2_;
 	SafetyHookMid chara_select_hook_3_;
+	SafetyHookMid NormalAttackHook;
+	SafetyHookMid KnockDownHook;
 	auto initialize() -> void;
 
 public:

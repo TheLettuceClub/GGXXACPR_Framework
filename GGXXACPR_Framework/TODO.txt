@@ -8,3 +8,7 @@ round and timer info
 Steam IDs
 get code that runs during normals from CE find address
 	wakeup if possible
+
+
+changelog for this update
+invincible time, inital proration, tension penalty time

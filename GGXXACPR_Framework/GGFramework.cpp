@@ -28,6 +28,8 @@ const int* camLeftEdge = nullptr;
 const int* camWidth = nullptr;
 const int* camHeight = nullptr;
 const float* camZoom = nullptr;
+int p1PrevActNo = 0;
+int p2PrevActNo = 0;
 
 void initalizeWSServer() {
 	worker.thread = std::make_shared<std::thread>([]() {
@@ -70,10 +72,7 @@ void MessageHandler()
 
 				newState.p1.health = p1->HitPoint;
 				newState.p1.CharID = p1->idno;
-				newState.p1.CleanHitCount = p1->ply->CleanHit_count;
-				newState.p1.damage = p1->ActHeader.damage; //according to ggxp-kor, true damage is on ActHeader, not DamActheader confirmed
 				newState.p1.direction = p1->dirflag;
-				newState.p1.hitCount = p2->ply->HitCount; //hit count is actually stored in this variable on the other player
 				newState.p1.negativeVal = p1->ply->NegativeVal;
 				newState.p1.stun1 = p1->ply->FaintTime;
 				newState.p1.stun2 = p1->ply->FaintPoint;
@@ -98,17 +97,13 @@ void MessageHandler()
 				newState.p1.guard.JustGuardIgnoreTime = p1->ply->JustGuardIgnoreTime;
 				newState.p1.guard.JustGuardTime = p1->ply->JustGuardTime;
 				newState.p1.guard.notThrowTime = p1->ply->notThrowTime;
-				newState.p1.initialProration = p2->ply->BaseComboDamage;
 				newState.p1.invincibleTime = p1->ply->MutekiTime;
 				newState.p1.tensionPenaltyTime = p1->ply->RomanCancelTime;
 
 				//p2
 				newState.p2.health = p2->HitPoint;
 				newState.p2.CharID = p2->idno;
-				newState.p2.CleanHitCount = p2->ply->CleanHit_count;
-				newState.p2.damage = p2->ActHeader.damage;
 				newState.p2.direction = p2->dirflag;
-				newState.p2.hitCount = p1->ply->HitCount;
 				newState.p2.negativeVal = p2->ply->NegativeVal;
 				newState.p2.stun1 = p2->ply->FaintTime;
 				newState.p2.stun2 = p2->ply->FaintPoint;
@@ -133,13 +128,14 @@ void MessageHandler()
 				newState.p2.guard.JustGuardIgnoreTime = p2->ply->JustGuardIgnoreTime;
 				newState.p2.guard.JustGuardTime = p2->ply->JustGuardTime;
 				newState.p2.guard.notThrowTime = p2->ply->notThrowTime;
-				newState.p2.initialProration = p1->ply->BaseComboDamage;
 				newState.p2.invincibleTime = p2->ply->MutekiTime;
 				newState.p2.tensionPenaltyTime = p2->ply->RomanCancelTime;
 
 				json j = newState;
 				std::thread(sendEvent, "ggxx_stateUpdate", j.dump()).detach();
 				frameCounter++;
+				p1PrevActNo = p1->actno;
+				p2PrevActNo = p2->actno;
 			}
 			catch (...) {
 				std::cerr << "Message Handler caught error" << std::endl;
@@ -222,6 +218,66 @@ void hook_CharaSelect(SafetyHookContext& ctx) { // executes a bunch of times on 
 	bInputHookLockout = false;
 }
 
+void hook_NmlAtk(SafetyHookContext& ctx) { //TODO: few of these values are set properly when the hook is called, replace with other one or later addr in same func?
+	// at this point esi points to the character who pressed's CW, and eax to their PE
+	const CHARACTER_WORK* offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
+	HitEvent he{};
+	he.frameCount = frameCounter;
+	if (offset->padid == 0) {
+		// then p1 got hit
+		he.attackerActNo = p2->actno;
+		he.CleanHitCount = p2->ply->CleanHit_count;
+		he.damage = p2->ActHeader.damage;
+		he.defenderActNo = p1->actno;
+		he.defenderPrevActNo = p1PrevActNo;
+		he.hitCount = p2->ply->HitCount;
+		he.initialProration = p1->ply->BaseComboDamage;
+		he.idno = p2->idno;
+	}
+	else if (offset->padid == 1) {
+		// then p2 got hit
+		he.attackerActNo = p1->actno;
+		he.CleanHitCount = p1->ply->CleanHit_count;
+		he.damage = p1->ActHeader.damage;
+		he.defenderActNo = p2->actno;
+		he.defenderPrevActNo = p2PrevActNo;
+		he.hitCount = p1->ply->HitCount;
+		he.initialProration = p2->ply->BaseComboDamage;
+		he.idno = p1->idno;
+	}
+	json j = he;
+	std::thread(sendEvent, "ggxx_hitEvent", j.dump()).detach();
+	
+}
+
+void hook_KD(SafetyHookContext& ctx) { //TODO change to be later in same func as downtimer hasn't been initalized yet
+	// at this point esi and edi are CW pointer to the character getting knocked down
+	// also eax is ptr to that chars PE too
+	const CHARACTER_WORK* offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
+	KnockDownEvent kde{};
+	kde.frameCount = frameCounter;
+	if (offset->padid == 0) {
+		// then p1 got hit
+		kde.attackerActNo = p2->actno;
+		kde.defenderActNo = p1->actno;
+		kde.defenderPrevActNo = p1PrevActNo;
+		kde.idno = p2->idno;
+		kde.downTimer = p1->ply->DownTimer;
+		kde.downFlag = p1->ply->DownFlag;
+	}
+	else if (offset->padid == 1) {
+		// then p2 got hit
+		kde.attackerActNo = p1->actno;
+		kde.defenderActNo = p2->actno;
+		kde.defenderPrevActNo = p2PrevActNo;
+		kde.idno = p1->idno;
+		kde.downTimer = p2->ply->DownTimer;
+		kde.downFlag = p2->ply->DownFlag;
+	}
+	json j = kde;
+	std::thread(sendEvent, "ggxx_KnockDownEvent", j.dump()).detach();
+}
+
 auto GGFramework::initialize() -> void
 {
 	base = GetModuleHandle(NULL);
@@ -232,6 +288,8 @@ auto GGFramework::initialize() -> void
 	chara_select_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1fe02d, hook_CharaSelect);
 	chara_select_hook_2_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1F97AE, hook_CharaSelect);
 	chara_select_hook_3_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1f98bd, hook_CharaSelect);
+	NormalAttackHook = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x2AD598, hook_NmlAtk); //could also be 2b2728 (eax&bx ptr attacker)
+	KnockDownHook = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1f4658, hook_KD);
 }
 
 
