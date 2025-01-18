@@ -107,7 +107,7 @@ struct RoundEndEvent {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(RoundEndEvent, whoWon, frameCount)
 
-struct HitEvent {
+struct HitEvent { //TODO: add both character's names and positions
 	int damage{};
 	unsigned long int frameCount{};
 	int attackerActNo{};
@@ -121,7 +121,7 @@ struct HitEvent {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HitEvent, idno, damage, frameCount, attackerActNo, defenderPrevActNo, defenderActNo, hitCount, initialProration, CleanHitCount)
 
-struct KnockDownEvent {
+struct KnockDownEvent { //not high priority
 	CharacterID idno{};
 	int attackerActNo{};
 	int defenderActNo{};
