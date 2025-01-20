@@ -6,18 +6,18 @@ data.eventInfo.*
 		CharID (string)
 		direction
 		health
-		damage (unscaled damage of current attack)
 		negativeVal
 		commandFlag (not decoded)
 		stun1 (timer once stunned)
 		stun2 (up-counting stun value, unknown maximum)
 		tensionBalance
-		CleanHitCount (number of clean hits in combo?? 65535 if one hasn't occurred)
-		hitCount
 		RISC
-		hitLevel (not decoded)
 		posx (0 is the left/right center of the stage)
 		posy (0 is the ground)
+		invincibleTime
+		FRCflag (inconsistent)
+		RClockoutTimer
+		tensionPenaltyTimer
 		inputs (booleans)
 			p,k,s,h,d,up,towards,away,down,pk,pks,pksh,pd,respect
 		seals (timers, 0 unless that player has been hit by Baiken GC Baku followups)
@@ -35,3 +35,20 @@ data.eventInfo.*
 
 "ggxx_roundStartEvent"
 no fields
+
+"ggxx_hitEvent" (ONLY on hit, not block)
+data.eventInfo.*
+	attacker/defender
+		actNo
+		prevActNo
+		health
+		idno
+		posx
+		posy
+	CleanHitCount
+	counterTime
+	damage (unscaled)
+	level (one less than on wiki, 0 to 4)
+	hitCount
+	initialProration (broken, assume it's 100)
+	frameCount

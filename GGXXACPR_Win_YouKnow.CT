@@ -455,24 +455,31 @@
             </CheatEntry>
             <CheatEntry>
               <ID>162</ID>
-              <Description>"tensionpenaltytime"</Description>
+              <Description>"??????"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>Byte</VariableType>
               <Address>+2f</Address>
             </CheatEntry>
             <CheatEntry>
               <ID>163</ID>
-              <Description>"romancanceltime"</Description>
+              <Description>"tensionpenaltytime"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>2 Bytes</VariableType>
               <Address>+30</Address>
             </CheatEntry>
             <CheatEntry>
               <ID>168</ID>
-              <Description>"romancancelignoretime"</Description>
+              <Description>"FRCpointflag"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>Byte</VariableType>
               <Address>+32</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>231</ID>
+              <Description>"romancancelignoretime"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+33</Address>
             </CheatEntry>
             <CheatEntry>
               <ID>167</ID>
@@ -501,6 +508,13 @@
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>Byte</VariableType>
               <Address>+f6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>235</ID>
+              <Description>"hitcount"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>2 Bytes</VariableType>
+              <Address>+fe</Address>
             </CheatEntry>
             <CheatEntry>
               <ID>166</ID>
@@ -647,10 +661,31 @@
         </CheatEntry>
         <CheatEntry>
           <ID>140</ID>
-          <Description>"actheader (placeholder)"</Description>
+          <Description>"actheader.flag"</Description>
           <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>8 Bytes</VariableType>
+          <VariableType>4 Bytes</VariableType>
           <Address>+e4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>232</ID>
+          <Description>"actheader.lvflag"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>2 Bytes</VariableType>
+          <Address>+e4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>233</ID>
+          <Description>"actheader.damage"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>2 Bytes</VariableType>
+          <Address>+e4+6</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>234</ID>
+          <Description>"actheader.flag2"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>+e4+7</Address>
         </CheatEntry>
         <CheatEntry>
           <ID>141</ID>
@@ -977,6 +1012,13 @@
               <Address>+f6</Address>
             </CheatEntry>
             <CheatEntry>
+              <ID>236</ID>
+              <Description>"hitcount"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>2 Bytes</VariableType>
+              <Address>+fe</Address>
+            </CheatEntry>
+            <CheatEntry>
               <ID>206</ID>
               <Description>"allcounter"</Description>
               <ShowAsSigned>0</ShowAsSigned>
@@ -1151,7 +1193,7 @@
           <ID>227</ID>
           <Description>"boostarts_inheritanceactno"</Description>
           <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>8 Bytes</VariableType>
+          <VariableType>4 Bytes</VariableType>
           <Address>+124</Address>
         </CheatEntry>
         <CheatEntry>
@@ -1220,6 +1262,12 @@
       <Description>"Byte (?)"</Description>
       <VariableType>Byte</VariableType>
       <Address>116F2000+AA</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>238</ID>
+      <Description>"training mode damage"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>GGXXACPR_Win.exe+6A9C8C</Address>
     </CheatEntry>
   </CheatEntries>
   <CheatCodes>

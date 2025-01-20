@@ -69,16 +69,17 @@ struct PlayerState {
 	int tensionBalance{};
 	Seals seals{};
 	int RISC{};
-	int hitLevel{};
 	int posx{};
 	int posy{};
 	Inputs inputs{};
 	GuardStuff guard{};
 	int invincibleTime{};
 	int tensionPenaltyTime{};
+	int FRCflag{};
+	int RClockoutTimer{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, invincibleTime, tensionPenaltyTime, CharID, direction, health, tension, negativeVal, commandFlag, stun1, stun2, tensionBalance, RISC, posx, posy, inputs, seals, guard)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, FRCflag, RClockoutTimer, invincibleTime, tensionPenaltyTime, CharID, direction, health, tension, negativeVal, commandFlag, stun1, stun2, tensionBalance, RISC, posx, posy, inputs, seals, guard)
 
 struct Camera {
 	int camXCenter{};
@@ -107,19 +108,30 @@ struct RoundEndEvent {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(RoundEndEvent, whoWon, frameCount)
 
+struct HEPlayerSpecific {
+	CharacterID idno{};
+	int posx{};
+	int posy{};
+	int health{};
+	int actNo{};
+	int prevActNo{};
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HEPlayerSpecific, idno, posx, posy, health, actNo, prevActNo)
+
 struct HitEvent { //TODO: add both character's names and positions
 	int damage{};
+	int level{};
 	unsigned long int frameCount{};
-	int attackerActNo{};
-	int defenderActNo{};
-	int defenderPrevActNo{};
+	HEPlayerSpecific attacker{};
+	HEPlayerSpecific defender{};
 	int hitCount{};
 	int initialProration{};
 	int CleanHitCount{};
-	CharacterID idno{};
+	int counterTime{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HitEvent, idno, damage, frameCount, attackerActNo, defenderPrevActNo, defenderActNo, hitCount, initialProration, CleanHitCount)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HitEvent, level, attacker, defender, counterTime, damage, frameCount, hitCount, initialProration, CleanHitCount)
 
 struct KnockDownEvent { //not high priority
 	CharacterID idno{};

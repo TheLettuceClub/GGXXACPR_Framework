@@ -73,10 +73,10 @@ struct PLAYER_ENTRY
 	uint8_t SkyDashCorrect;
 	uint8_t inertiatime;
 	uint8_t DownBoundDamage;
-	uint8_t TensionPenaltyTime;
-	uint16_t RomanCancelTime; // tension penalty timer
-	uint8_t RomanCancelIgnoreTime; // set if miss FRC window?
-	uint8_t bIgnoreBomberMuteki;
+	uint8_t TensionPenaltyTime; //never used
+	uint16_t RomanCancelTime; // tension penalty timer (misnamed here)
+	uint8_t RomanCancelIgnoreTime; // FRC point flag
+	uint8_t bIgnoreBomberMuteki; //true roman cancel ignore timer
 	char TensionHandicap;
 	uint8_t NormalAttackDisableFlag;
 	uint8_t field33_0x36;
@@ -279,14 +279,14 @@ struct DAMAGEPARAM
 	unsigned short DamageHosei;
 	union HITSEUNION HitSE;
 	union HITSEUNION GuardSE;
-	unsigned char dno;
+	unsigned char dno; // used for hit level, but one less than on wiki
 	unsigned char dprob;
-	unsigned char gno;
+	unsigned char gno; // used for hit level, but one less than on wiki
 	unsigned char gprob;
 	unsigned short field15_0x20; //these two could be the void* DamInt
 	unsigned short field16_0x22;
 	char field17_0x24;
-	char field18_0x25;
+	char field18_0x25; //used for initial proration
 	char field19_0x26;
 	char field20_0x27;
 	char field21_0x28;
@@ -364,7 +364,7 @@ struct CHARACTER_WORK
 	uint8_t field52_0x86;
 	uint8_t field53_0x87;
 	struct DAMAGEPARAM* HitParam;
-	struct DAMAGEPARAM* DamParam;
+	struct DAMAGEPARAM* DamParam; //inherits values of other players' hitparam on hit
 	void* ColliHitInterrupt;
 	void* PaletteProc;
 	char PalId;
