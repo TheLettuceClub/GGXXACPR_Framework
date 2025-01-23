@@ -81,16 +81,16 @@ struct PlayerState {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlayerState, FRCflag, RClockoutTimer, invincibleTime, tensionPenaltyTime, CharID, direction, health, tension, negativeVal, commandFlag, stun1, stun2, tensionBalance, RISC, posx, posy, inputs, seals, guard)
 
-struct Camera {
-	int camXCenter{};
-	int camLeftEdge{};
-	int camBottomEdge{};
-	int camWidth{};
-	int camHeight{};
-	float camZoom{};
-};
+//struct Camera {
+//	int camXCenter{};
+//	int camLeftEdge{};
+//	int camBottomEdge{};
+//	int camWidth{};
+//	int camHeight{};
+//	float camZoom{};
+//};
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Camera, camXCenter, camLeftEdge, camWidth, camHeight, camZoom, camBottomEdge)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Camera, CenterXPos, BottomEdge, LeftEdge, Width, Height, Zoom)
 
 struct StateUpdate {
 	PlayerState p1{};

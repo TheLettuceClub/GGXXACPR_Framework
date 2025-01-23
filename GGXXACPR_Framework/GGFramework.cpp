@@ -22,12 +22,13 @@ const char* p1DInputs = nullptr;
 const char* p1PInputs = nullptr;
 const char* p2DInputs = nullptr;
 const char* p2PInputs = nullptr;
-const int* camXCenter = nullptr;
-const int* camBottomEdge = nullptr;
-const int* camLeftEdge = nullptr;
-const int* camWidth = nullptr;
-const int* camHeight = nullptr;
-const float* camZoom = nullptr;
+Camera* iCam = nullptr;
+//const int* camXCenter = nullptr;
+//const int* camBottomEdge = nullptr;
+//const int* camLeftEdge = nullptr;
+//const int* camWidth = nullptr;
+//const int* camHeight = nullptr;
+//const float* camZoom = nullptr;
 int p1PrevActNo = 0;
 int p2PrevActNo = 0;
 
@@ -63,12 +64,13 @@ void MessageHandler()
 			//maybe add camera struct later
 			try {
 				newState.frameCount = frameCounter;
-				newState.cam.camHeight = *camHeight;
+				/*newState.cam.camHeight = *camHeight;
 				newState.cam.camLeftEdge = *camLeftEdge;
 				newState.cam.camWidth = *camWidth;
 				newState.cam.camBottomEdge = *camBottomEdge;
 				newState.cam.camXCenter = *camXCenter;
-				newState.cam.camZoom = *camZoom;
+				newState.cam.camZoom = *camZoom;*/
+				newState.cam = *iCam;
 
 				newState.p1.health = p1->HitPoint;
 				newState.p1.CharID = p1->idno;
@@ -176,12 +178,13 @@ void hook_RoundStart(SafetyHookContext& ctx) {
 	p2DInputs = reinterpret_cast<char*>(base) + 0x6D0F18;
 	p2PInputs = reinterpret_cast<char*>(base) + 0x6D0F19;
 
-	camXCenter = (int*)(reinterpret_cast<char*>(base) + 0x6D5CE4);
+	/*camXCenter = (int*)(reinterpret_cast<char*>(base) + 0x6D5CE4);
 	camBottomEdge = (int*)(reinterpret_cast<char*>(base) + 0x6D5CE8);
 	camLeftEdge = (int*)(reinterpret_cast<char*>(base) + 0x6D5CF4);
 	camWidth = (int*)(reinterpret_cast<char*>(base) + 0x6D5CFC);
 	camHeight = (int*)(reinterpret_cast<char*>(base) + 0x6D5D00);
-	camZoom = (float*)(reinterpret_cast<char*>(base) + 0x6D5D18);
+	camZoom = (float*)(reinterpret_cast<char*>(base) + 0x6D5D18);*/
+	iCam = (Camera*)(reinterpret_cast<char*>(base) + 0x006D5CD4);
 	std::thread(sendEvent, "ggxx_roundStartEvent", "{}").detach();
 }
 

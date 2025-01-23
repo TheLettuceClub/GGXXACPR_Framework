@@ -25,7 +25,7 @@ data.eventInfo.*
 		guard (guard related timers and flags, all ints)
 			guardSt, FaultlessDefenceDisableTime JustFD_EnableCounter, JustFD_GuardDisableCounter, JustFD_ColorCounter, JustFD_ReversalIgnoreTimer, JustFD_EasyCounter, JustFD_Flag, notThrowTime, JustGuardTime, JustGuardIgnoreTime, JGWhiteTime
 	cam (camera values, all ints except zoom which is float)
-		camXCenter, camLeftEdge, camBottomEdge, camWidth, camHeight, camZoom
+		BottomEdge, CenterXPos, Height, LeftEdge, Width, Zoom
 		
 
 "ggxx_roundEndEvent"

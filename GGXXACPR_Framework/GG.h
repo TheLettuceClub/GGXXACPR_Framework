@@ -33,6 +33,19 @@ enum class CharacterID : uint16_t
 
 #pragma pack(push, 1)
 
+struct Camera {
+	char pad1[16];
+	int CenterXPos{};
+	int BottomEdge{};
+	char pad2[8];
+	int LeftEdge{};
+	char pad3[4];
+	int Width{};
+	int Height{};
+	char pad[20];
+	float Zoom{};
+};
+
 union PERSONALWORK
 {
 	int32_t l;
@@ -314,7 +327,7 @@ struct CHARACTER_WORK
 	uint8_t posdirflag;
 	uint32_t back;
 	struct CHARACTER_WORK* next;
-	uint32_t actst;
+	uint32_t actst; //equiv to YK's ActionStateFlags
 	uint32_t actnonext;
 	uint32_t actnonexttemp;
 	int16_t actno;
@@ -326,10 +339,10 @@ struct CHARACTER_WORK
 	uint8_t _pad;
 	uint8_t padid;
 	int16_t parentFlag;
-	int16_t GuardSt;
+	int16_t GuardSt; //equiv to YK GuardStateFlags
 	struct PLAYER_ENTRY* ply;
 	void* graphicfunc;
-	uint32_t attackst;
+	uint32_t attackst; //YK AttackStateFlags
 	uint32_t CommandFlag;
 	uint32_t* CellTop;
 	uint16_t CellNo;
@@ -341,7 +354,7 @@ struct CHARACTER_WORK
 	uint16_t corey;
 	uint16_t scale;
 	uint16_t scaleY;
-	struct COLLISION* ColliAddr;
+	struct COLLISION* ColliAddr; //YK Hitbox[]
 	struct COLLISION* ExColliAddr;
 	char ColliFlag; //somtimes changes, unclear when or why
 	char HitColliFlag; //unknown, always 0
@@ -359,8 +372,8 @@ struct CHARACTER_WORK
 	int16_t priority2; //does change when things happen, unclear why
 	uint8_t field48_0x82;
 	uint8_t field49_0x83;
-	uint8_t field50_0x84;
-	uint8_t field51_0x85;
+	uint8_t field50_0x84; //YK: boxCount
+	uint8_t field51_0x85; //YK: BoxIter
 	uint8_t field52_0x86;
 	uint8_t field53_0x87;
 	struct DAMAGEPARAM* HitParam;
