@@ -3,9 +3,9 @@
 	<head>
 		<script>
 			//const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-			let webSocket = new WebSocket('ws://127.0.0.1:6615/');
+			let webSocket = new WebSocket('ws://127.0.0.1:52615/');
 			webSocket.onopen = function(e) {
-				console.log("Connected to strive WS");
+				console.log("Connected to ACPR WS");
 				let dateTime = Date.now();
 				console.log("Unix time is now: "+dateTime);
 				webSocket.send(dateTime);

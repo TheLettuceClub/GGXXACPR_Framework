@@ -1,4 +1,4 @@
-Connect via WS/SAMMI/etc
+Connect via WS/SAMMI/etc to port 52615
 "ggxx_stateUpdate"
 data.eventInfo.*
 	framecount
