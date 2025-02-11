@@ -115,9 +115,10 @@ struct HEPlayerSpecific {
 	int health{};
 	int actNo{};
 	int prevActNo{};
+	int side{};
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HEPlayerSpecific, idno, posx, posy, health, actNo, prevActNo)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(HEPlayerSpecific, side, idno, posx, posy, health, actNo, prevActNo)
 
 struct HitEvent { //TODO: add both character's names and positions
 	int damage{};

@@ -45,6 +45,7 @@ data.eventInfo.*
 		idno
 		posx
 		posy
+		side
 	CleanHitCount
 	counterTime
 	damage (unscaled)

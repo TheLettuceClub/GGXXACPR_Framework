@@ -236,11 +236,13 @@ void hook_NmlAtk(SafetyHookContext& ctx) { //TODO: few of these values are set p
 		he.attacker.posx = p2->posx;
 		he.attacker.posy = p2->posy;
 		he.attacker.prevActNo = p2PrevActNo;
+		he.attacker.side = p2->padid;
 		he.defender.actNo = p1->actno;
 		he.defender.health = p1->HitPoint;
 		he.defender.idno = p1->idno;
 		he.defender.posx = p1->posx;
 		he.defender.posy = p1->posy;
+		he.defender.side = p1->padid;
 		he.defender.prevActNo = p1PrevActNo;
 		he.CleanHitCount = p2->ply->CleanHit_count;
 		he.counterTime = p1->ply->counterredtime;
@@ -269,6 +271,8 @@ void hook_NmlAtk(SafetyHookContext& ctx) { //TODO: few of these values are set p
 		he.level = p1->HitParam->dno;
 		he.hitCount = p2->ply->HitCount;
 		he.initialProration = p1->HitParam->field18_0x25;
+		he.attacker.side = p1->padid;
+		he.defender.side = p2->padid;
 	}
 	json j = he;
 	std::thread(sendEvent, "ggxx_hitEvent", j.dump()).detach();
