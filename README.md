@@ -5,4 +5,4 @@ Currently on indefinite hiatus. You are welcome to do whatever you like with thi
 
 You definitely can't cheat with this code, so don't even try and don't get on my ass about it either.
 
-Questions? Hopefully they're answered [here!](https://docs.google.com/document/d/19RqsHes8FvKDgs2CCk7VERXOedbj8uU5kbtEvTOoQSA/)
+Questions? Hopefully they're answered [here!](https://thelettuceclub.github.io/mods/)
